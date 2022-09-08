@@ -1,0 +1,625 @@
+set system host-name <hostname>	
+set system configuration-database extend-size	(M, MX, PTX1, and T i386 only) Extend the default size of the configuration database. The extended default size is based on the original default database size. A device with a default database size of 409.99 MB will extend to a maximum of 1049.99 MB, and a device with a default database size of 665.99 MB will extend to a maximum of 1305.99. 
+set system time-zone Asia/Riyadh	
+set system switchover-on-routing-crash	
+set system no-redirects	
+set system no-ping-record-route	
+set system no-ping-time-stamp	
+set system dump-on-panic	
+set system internet-options icmpv4-rate-limit packet-rate 5000	
+set system internet-options tcp-reset-syn-acknowledge	
+set system internet-options tcp-drop-synfin-set	
+set system internet-options no-tcp-reset drop-all-tcp	
+set system authentication-order tacplus	
+set system authentication-order password	
+set system ports console authentication-order password	
+set system ports console log-out-on-disconnect	
+set system ports console insecure	
+set system ports console type vt100	
+set system ports auxiliary disable	
+set system root-authentication encrypted-password "$1"	
+set system tacplus-server 1.1.1.1 secret "$9"	
+set system tacplus-server 1.1.1.1 single-connection	
+set system tacplus-server 1.1.1.1 source-address <loopback>	
+set system tacplus-server 1.1.1.2 secret "$9"	
+set system tacplus-server 1.1.1.2 single-connection	
+set system tacplus-server 1.1.1.2 source-address <loopback>	
+set system accounting events login	
+set system accounting events interactive-commands	
+set system accounting destination tacplus server 2.2.2.1 secret "$9zF"	
+set system accounting destination tacplus server 2.2.2.1 timeout 5	
+set system accounting destination tacplus server 2.2.2.1 source-address <loopback>	
+set system accounting destination tacplus server 2.2.2.2 secret "$9F"	
+set system accounting destination tacplus server 2.2.2.2 timeout 5	
+set system accounting destination tacplus server 2.2.2.2 source-address <loopback>	
+set system login announcement "*n*************DFGDFGSFGSDFGSFGSFGSFG**********************\n"	
+set system login message "****DFASADFASDFASDFASDF***************************************************\n"	
+set system login class super-user-local idle-timeout 3	
+set system login class super-user-local permissions all	
+set system login user admin uid 2000	
+set system login user admin class super-user-local	
+set system login user admin authentication encrypted-password "$5"	
+set system login password minimum-length 9	
+set system services ssh root-login deny	
+set system services ssh no-tcp-forwarding	
+set system services ssh protocol-version v2	
+set system services ssh max-sessions-per-connection 32	
+set system services ssh client-alive-count-max 3	
+set system services ssh client-alive-interval 120	
+set system services ssh connection-limit 20	
+set system services ssh rate-limit 20	
+set system services ssh key-exchange dh-group1-sha1 	
+set system services netconf ssh connection-limit 5	
+set system services netconf ssh rate-limit 5	
+set system syslog archive size 1m	
+set system syslog archive files 10	
+set system syslog host other-routing-engine any error	
+set system syslog host other-routing-engine log-prefix other-RE	
+set system syslog host 3.3.3.1 any any	
+set system syslog host 3.3.3.1  source-address <loopback>	
+set system syslog host 3.3.3.2  any any	
+set system syslog host 3.3.3.2 source-address  <loopback>	
+set system syslog user * any critical	
+set system syslog file messages any info	info  yerine "notice" seçeneği de mevcut
+set system syslog file messages authorization info	
+set system syslog file messages archive world-readable	
+set system syslog file messages explicit-priority	
+set system syslog file interactive-commands interactive-commands any	
+set system syslog file security authorization info	
+set system syslog file commands interactive-commands info	
+set system syslog file firewall-filter-log firewall any	
+set system syslog file default-log-messages any info	
+set system syslog file default-log-messages match "(requested 'commit' operation)|(copying configuration to juniper.save)|(commit complete)|ifAdminStatus|(FRU power)|(FRU removal)|(FRU insertion)|(link UP)|transitioned|Transferred|transfer-file|(license add)|(license delete)|(package -X update)|(package -X delete)|(FRU Online)|(FRU Offline)|(plugged in)|(unplugged)|CFMD_CCM_DEFECT| LFMD_3AH | RPD_MPLS_PATH_BFD|(Master Unchanged, Members Changed)|(Master Changed, Members Changed)|(Master Detected, Members Changed)|(vc add)|(vc delete)|(Master detected)|(Master changed)|(Backup detected)|(Backup changed)|(interface vcp-)|(AIS_DATA_AVAILABLE)"	
+set system syslog file default-log-messages structured-data	
+set system syslog console any alert	
+set system syslog time-format year	
+set system syslog time-format millisecond	
+set system syslog source-address <loopback>	
+set system ddos-protection protocols ttl aggregate bandwidth 200	
+set system ddos-protection protocols ttl aggregate burst 200	
+set system commit fast-synchronize	
+set system commit synchronize	
+set system ntp server 4.4.4.1 prefer	
+set system ntp server 4.4.4.2	
+
+set system ntp source-address <loopback>	
+	
+set chassis redundancy routing-engine 0 master	
+set chassis redundancy routing-engine 1 backup	
+set chassis redundancy failover on-loss-of-keepalives	
+set chassis redundancy failover on-disk-failure	
+set chassis redundancy graceful-switchover	
+set chassis aggregated-devices ethernet device-count 128	
+set chassis aggregated-devices maximum-links 64	
+set chassis fpc <x> error fatal action alarm	"bütün fpc ler için bu konfigurasyon yapılmalıdır. 
+action olarak ""log"" da tercih edilebilir. 
+bütün fpc ler için bu konfigurasyon yapılmalıdır. "
+set chassis fpc <x> error fatal action log	
+set chassis fpc  <x> error fatal action disable-pfe	
+set chassis fpc  <x> error fatal action reset	
+set chassis fpc <x> pic <x> port <x> speed 10g	gerektiği durumda uygulanmalıdır. 
+set chassis alarm management-ethernet link-down ignore	
+set chassis network-services enhanced-mode	
+	
+set interfaces interface-range ALL_PHY_UPLINKS member xe-*/*/*	
+set interfaces interface-range ALL_PHY_UPLINKS member et-*/*/*	
+	
+set interfaces lo0 unit 0 family inet filter input protect-re	
+set interfaces lo0 unit 0 family inet filter output re-output	
+set interfaces lo0 unit 0 family inet address <loopback>	
+set interfaces lo0 unit 0 family iso address <isis net-id>	
+	
+set snmp v3 usm local-engine user snmp-user-read authentication-md5 authentication-key "$9$"	
+set snmp v3 usm local-engine user snmp-user-read privacy-des privacy-key "$9"	
+set snmp v3 usm local-engine user snmp-user-write authentication-md5 authentication-key "$9$cP"	
+set snmp v3 usm local-engine user snmp-user-write privacy-des privacy-key "$9$"	
+set snmp v3 vacm security-to-group security-model usm security-name snmp-user-read group snmp-read	
+set snmp v3 vacm security-to-group security-model usm security-name snmp-user-write group snmp-write	
+set snmp v3 vacm access group snmp-read default-context-prefix security-model any security-level privacy read-view include-all	
+set snmp v3 vacm access group snmp-read default-context-prefix security-model any security-level privacy write-view exclude-all	
+set snmp v3 vacm access group snmp-write default-context-prefix security-model any security-level privacy read-view include-all	
+set snmp v3 vacm access group snmp-write default-context-prefix security-model any security-level privacy write-view include-all	
+set snmp view no-ldp-stats oid .1.3.6.1.4.1.2636.3.14 exclude	
+set snmp view include-all oid .1 include	
+set snmp view exclude-all oid .1 exclude	
+set snmp community telecomcommunity authorization read-only	
+set snmp community telecomcommunity clients X.X.X.X/X	
+	
+set snmp trap-options source-address <loopback>	
+set snmp trap-group telecomcommunity version v2	
+set snmp trap-group telecomcommunity categories authentication	
+set snmp trap-group telecomcommunity categories chassis	
+set snmp trap-group telecomcommunity categories link	
+set snmp trap-group telecomcommunity categories routing	
+set snmp trap-group telecomcommunity categories configuration	
+set snmp trap-group telecomcommunity targets 7.7.7.1
+set snmp trap-group telecomcommunity targets 7.7.7.2	
+	
+set forwarding-options hash-key family inet layer-3	
+set forwarding-options hash-key family inet layer-4	
+set forwarding-options hash-key family inet6 layer-3	
+set forwarding-options hash-key family inet6 layer-4	
+set forwarding-options hash-key family mpls all-labels	
+	
+set routing-options srlg SRLG-100 srlg-value 100	
+set routing-options srlg SRLG-101 srlg-value 101	
+set routing-options srlg SRLG-102 srlg-value 102	
+set routing-options srlg SRLG-103 srlg-value 103	
+set routing-options srlg SRLG-104 srlg-value 104	
+set routing-options srlg SRLG-105 srlg-value 105	
+set routing-options srlg SRLG-106 srlg-value 106	
+set routing-options srlg SRLG-107 srlg-value 107	
+set routing-options srlg SRLG-108 srlg-value 108	
+set routing-options srlg SRLG-109 srlg-value 109	
+set routing-options srlg SRLG-110 srlg-value 110	
+set routing-options srlg SRLG-111 srlg-value 111	
+set routing-options srlg SRLG-112 srlg-value 112	
+set routing-options srlg SRLG-113 srlg-value 113	
+set routing-options srlg SRLG-114 srlg-value 114	
+set routing-options srlg SRLG-115 srlg-value 115	
+set routing-options srlg SRLG-116 srlg-value 116	
+set routing-options srlg SRLG-117 srlg-value 117	
+set routing-options srlg SRLG-118 srlg-value 118	
+set routing-options srlg SRLG-119 srlg-value 119	
+set routing-options srlg SRLG-120 srlg-value 120	
+
+set routing-options nonstop-routing	
+set routing-options router-id <loopback>	
+set routing-options forwarding-table export pplb	
+set routing-options forwarding-table indirect-next-hop-change-acknowledgements	
+	
+set protocols igmp interface ALL_PHY_UPLINKS disable	
+set protocols igmp interface ae<x.0> disable	igmp tüm aggregated interfaceler için de kapatılmalıdır. 
+	
+set protocols rsvp traceoptions file rsvp-log	
+set protocols rsvp traceoptions file size 100m	
+set protocols rsvp traceoptions file files 10	
+set protocols rsvp traceoptions file world-readable	
+set protocols rsvp traceoptions flag path detail	
+set protocols rsvp traceoptions flag error	
+set protocols rsvp traceoptions flag event detail	
+set protocols rsvp traceoptions flag pathtear	
+set protocols rsvp traceoptions flag resv detail	
+set protocols rsvp traceoptions flag route	
+set protocols rsvp traceoptions flag state	
+set protocols rsvp traceoptions flag resvtear	
+	
+set protocols mpls statistics no-transit-statistics	
+set protocols mpls traffic-engineering bgp-igp	
+set protocols mpls traceoptions file mpls-trace	
+set protocols mpls traceoptions file size 100m	
+set protocols mpls traceoptions file files 10	
+set protocols mpls traceoptions file world-readable	
+set protocols mpls traceoptions flag error	
+set protocols mpls traceoptions flag state	
+set protocols mpls admin-groups A 0	
+set protocols mpls admin-groups B 1	
+set protocols mpls admin-groups reserved-3 4	
+set protocols mpls admin-groups reserved-4 5	
+set protocols mpls admin-groups C 2	
+set protocols mpls admin-groups D 3	
+set protocols mpls optimize-switchover-delay 20	
+set protocols mpls optimize-timer 120	
+set protocols mpls exclude-srlg	
+set protocols mpls <lsp-path>	Bu tanımda path dynamic de olsa tanımlanmak zorundadır.Tüm P katmanı cihazlarına doğru LSP-PATH açılır, örnek: set protocols mpls path to-mnddc-ptx5-02-path. Direkt Bağlı NPE ler içinde label switched path oluşturulur
+set protocols mpls label-switched-path <lsp-name> to <tunnel-dest>	
+set protocols mpls label-switched-path <lsp-name> ldp-tunneling	LDPoverRSVP çalışması için kullanılan komuttur. Tek yönlü tanımlanabilir. 
+set protocols mpls label-switched-path <lsp-name> hop-limit 8	Default değer 
+set protocols mpls label-switched-path <lsp-name> exclude-srlg	
+set protocols mpls label-switched-path <lsp-name> admin-group exclude A	
+set protocols mpls label-switched-path <lsp-name> admin-group exclude B	
+set protocols mpls label-switched-path <lsp-name> no-self-ping	
+set protocols mpls label-switched-path <lsp-name> link-protection	TE tünelde detour link protection aktif edilmesi için girilen komut 
+set protocols mpls label-switched-path <lsp-name> adaptive	Have the LSP smoothly cut over to new routes
+set protocols mpls label-switched-path <lsp-name> primary <lsp-path>	
+	
+set protocols isis traceoptions file isis	
+set protocols isis traceoptions file size 5m	
+set protocols isis traceoptions file files 10	
+set protocols isis traceoptions file world-readable	
+set protocols isis traceoptions flag error detail	
+set protocols isis traceoptions flag state detail	
+set protocols isis lsp-lifetime 65535	
+set protocols isis no-ipv6-routing	
+set protocols isis spf-options delay 50	
+set protocols isis spf-options holddown 2000	
+set protocols isis spf-options rapid-runs 5	
+set protocols isis overload timeout 300	
+set protocols isis overload advertise-high-metrics	
+	
+set protocols isis traffic-engineering ignore-lsp-metrics	
+set protocols isis traffic-engineering family inet shortcuts	
+set protocols isis level 2 authentication-type md5	
+set protocols isis level 2 no-csnp-authentication	
+set protocols isis level 2 no-psnp-authentication	
+set protocols isis level 2 wide-metrics-only	
+set protocols isis level 1 disable	
+set protocols isis interface all disable	
+set protocols isis interface lo0.0 passive	
+set protocols esis disable	
+	
+set protocols ldp traceoptions file ldp-trace	
+set protocols ldp traceoptions file size 1m	
+set protocols ldp traceoptions file files 10	
+set protocols ldp traceoptions file world-readable	
+set protocols ldp traceoptions flag state	
+set protocols ldp traceoptions flag error	
+set protocols ldp track-igp-metric	
+set protocols ldp deaggregate	
+set protocols ldp label-withdrawal-delay 30	
+set protocols ldp igp-synchronization holddown-interval 10	
+set protocols ldp interface lo0.0 	
+	
+set protocols bfd traceoptions file bfd-trace	
+set protocols bfd traceoptions file size 25m	
+set protocols bfd traceoptions file files 10	
+set protocols bfd traceoptions file world-readable	
+set protocols bfd traceoptions flag event	
+	
+set protocols lldp management-address <loopback>	
+set protocols lldp ptopo-configuration-trap-interval 60	
+set protocols lldp lldp-configuration-notification-interval 60	
+set protocols lldp port-id-subtype interface-name	
+set protocols lldp interface all disable	
+	
+set policy-options prefix-list multicast-all-routers 224.0.0.2/32	
+set policy-options prefix-list multicast-pim 224.0.0.13/32	
+set policy-options prefix-list tacacs-servers apply-path "system tacplus-server <*>"	
+set policy-options prefix-list ntp-servers apply-path "system ntp server <*>"	
+set policy-options prefix-list snmp-trap-servers apply-path "snmp trap-group <*> targets <*>"	
+set policy-options prefix-list snmp-community-clients apply-path "snmp community <*> clients <*>"	
+set policy-options prefix-list myserials apply-path "interfaces <*> unit <*> family inet address <*>"	
+set policy-options prefix-list myserials-logical-systems apply-path "logical-systems <*> interfaces <*> unit <*> family inet address <*>"	
+set policy-options prefix-list myloopback apply-path "interfaces lo0 unit <*> family inet address <*>"	
+set policy-options prefix-list myloopback-logical-systems apply-path "logical-systems <*> interfaces lo0 unit <*> family inet address <*>"	
+set policy-options prefix-list loopbacks <all-loopbacks>	
+set policy-options prefix-list icmp-allowed <icmp-allowed>	
+set policy-options prefix-list ssh-clients <ssh-allowed>	
+set policy-options prefix-list serials <serials>	
+	
+set policy-options policy-statement pplb then load-balance per-packet	
+	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class NETWORK_CONTROL loss-priority low code-points 111	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class NETWORK_CONTROL loss-priority low code-points 110	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class VOICE loss-priority low code-points 101	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class MCAST_SIGNALING loss-priority low code-points 100	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class PLATINUM loss-priority low code-points 011	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class GOLD loss-priority low code-points 010	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class SILVER loss-priority low code-points 001	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class BEST_EFFORT loss-priority low code-points 000	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class NETWORK_CONTROL loss-priority high code-points 111	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class NETWORK_CONTROL loss-priority low code-points 110	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class VOICE loss-priority low code-points 101	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class MCAST_SIGNALING loss-priority low code-points 100	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class PLATINUM loss-priority low code-points 011	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class GOLD loss-priority low code-points 010	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class SILVER loss-priority low code-points 001	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class BEST_EFFORT loss-priority low code-points 000	
+set class-of-service host-outbound-traffic forwarding-class NETWORK_CONTROL	
+set class-of-service host-outbound-traffic dscp-code-point 111000	line card lara dağıtılmış halde çalışan, PPM prosesin sorumlu olduğu paketlerin ve tüm routing engine tarafından oluşturulan paketlerin işaretlenmesine ve doğru kuyruğa alınması sağlanır. Bir sonraki loopback altına girilen filtre ise bu filtreden daha üstündür  ve RE tarafından yaratılan paketler için geçerlidir. bu sayede "lacp, bfd" gibi paketler 111 ile işaretlenirken, RE tarafından yaratılan OSPF, LDP gibi paketler 110 ile işaretlenir. RE tarafından oluşturulan icmp-reply benzeri paketler ise son term e gelerek best-effort kuyruğuna alınır. 
+set class-of-service forwarding-classes class NETWORK_CONTROL queue-num 6	https://www.juniper.net/documentation/en_US/junos/topics/concept/cos-host-outbound-traffic-default-classification-and-dscp-remarking.html
+set class-of-service forwarding-classes class VOICE queue-num 5	This feature overrides the host-outbound-traffic settings for the Routing Engine output traffic only. 
+set class-of-service forwarding-classes class MCAST_SIGNALING queue-num 4	
+set class-of-service forwarding-classes class PLATINUM queue-num 3	
+set class-of-service forwarding-classes class GOLD queue-num 2	
+set class-of-service forwarding-classes class SILVER queue-num 1	
+set class-of-service forwarding-classes class BEST_EFFORT queue-num 0	
+	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class NETWORK_CONTROL loss-priority low code-point 111	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class NETWORK_CONTROL loss-priority high code-point 110	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class VOICE loss-priority low code-point 101	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class VOICE loss-priority high code-point 101	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class MCAST_SIGNALING loss-priority low code-point 100	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class MCAST_SIGNALING loss-priority high code-point 100	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class PLATINUM loss-priority low code-point 011	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class PLATINUM loss-priority high code-point 011	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class GOLD loss-priority low code-point 010	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class GOLD loss-priority high code-point 010	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class SILVER loss-priority low code-point 001	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class SILVER loss-priority high code-point 001	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class BEST_EFFORT loss-priority low code-point 000	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class BEST_EFFORT loss-priority high code-point 000	
+	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class NETWORK_CONTROL scheduler BACKBONE_UPLINK_NETWORK_CONTROL	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class VOICE scheduler BACKBONE_UPLINK_VOICE	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class MCAST_SIGNALING scheduler BACKBONE_UPLINK_MCAST_SIGNALING	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class PLATINUM scheduler BACKBONE_UPLINK_SOLTRAFFIC	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class GOLD scheduler BACKBONE_UPLINK_PREMIUM	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class SILVER scheduler BACKBONE_UPLINK_BUSINESS	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class BEST_EFFORT scheduler BACKBONE_UPLINK_BEST_EFFORT	
+	
+	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL transmit-rate percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL buffer-size percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL priority high	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE transmit-rate percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE transmit-rate rate-limit	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE buffer-size temporal 10k	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE priority strict-high	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING transmit-rate percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING buffer-size percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING priority high	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM transmit-rate percent 28	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM buffer-size percent 28	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM priority medium-high	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD transmit-rate percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD buffer-size percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD priority medium-low	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER transmit-rate percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER buffer-size percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER priority low	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT transmit-rate percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT buffer-size remainder	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT priority low	
+	
+set firewall policer management-1m if-exceeding bandwidth-limit 1m	
+set firewall policer management-1m if-exceeding burst-size-limit 625k	
+set firewall policer management-1m then discard	
+set firewall policer management-5m if-exceeding bandwidth-limit 5m	
+set firewall policer management-5m if-exceeding burst-size-limit 625k	
+set firewall policer management-5m then discard	
+set firewall policer management-10m if-exceeding bandwidth-limit 10m	
+set firewall policer management-10m if-exceeding burst-size-limit 625k	
+set firewall policer management-10m then discard	
+set firewall policer management-50m if-exceeding bandwidth-limit 50m	
+set firewall policer management-50m if-exceeding burst-size-limit 625k	
+set firewall policer management-50m then discard	
+set firewall policer management-100m if-exceeding bandwidth-limit 100m	
+set firewall policer management-100m if-exceeding burst-size-limit 625k	
+set firewall policer management-100m then discard	
+	
+set firewall filter protect-re term small-packets from packet-length 0-24	
+set firewall filter protect-re term small-packets then count protect-re-small-packets	
+set firewall filter protect-re term small-packets then syslog	
+set firewall filter protect-re term small-packets then discard	
+set firewall filter protect-re term first-fragment from first-fragment	
+set firewall filter protect-re term first-fragment from protocol tcp	
+set firewall filter protect-re term first-fragment from protocol udp	
+set firewall filter protect-re term first-fragment from protocol icmp	
+set firewall filter protect-re term first-fragment from protocol rsvp	
+set firewall filter protect-re term first-fragment from protocol igmp	
+set firewall filter protect-re term first-fragment from protocol pim	
+set firewall filter protect-re term first-fragment then count no-fragment	
+set firewall filter protect-re term first-fragment then syslog	
+set firewall filter protect-re term first-fragment then discard	
+set firewall filter protect-re term is-fragment from is-fragment	
+set firewall filter protect-re term is-fragment from protocol tcp	
+set firewall filter protect-re term is-fragment from protocol udp	
+set firewall filter protect-re term is-fragment from protocol icmp	
+set firewall filter protect-re term is-fragment from protocol rsvp	
+set firewall filter protect-re term is-fragment from protocol igmp	
+set firewall filter protect-re term is-fragment from protocol pim	
+set firewall filter protect-re term is-fragment then count no-fragment	
+set firewall filter protect-re term is-fragment then syslog	
+set firewall filter protect-re term is-fragment then discard	
+set firewall filter protect-re term discard-ip-options from ip-options any	
+set firewall filter protect-re term discard-ip-options from protocol-except rsvp	
+set firewall filter protect-re term discard-ip-options then count discard-ip-options	
+set firewall filter protect-re term discard-ip-options then discard	
+set firewall filter protect-re term accept-bfd from source-prefix-list myserials	
+set firewall filter protect-re term accept-bfd from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bfd from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myserials	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myloopback	
+set firewall filter protect-re term accept-bfd from protocol udp	
+set firewall filter protect-re term accept-bfd from source-port 49152-65535	
+set firewall filter protect-re term accept-bfd from destination-port 3784-3785	
+set firewall filter protect-re term accept-bfd from destination-port 6784	
+set firewall filter protect-re term accept-bfd then policer management-5m	
+set firewall filter protect-re term accept-bfd then count accept-bfd	
+set firewall filter protect-re term accept-bfd then accept	
+set firewall filter protect-re term accept-ldp-discover from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-discover from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-discover from destination-prefix-list multicast-all-routers	
+set firewall filter protect-re term accept-ldp-discover from protocol udp	
+set firewall filter protect-re term accept-ldp-discover from destination-port ldp	
+set firewall filter protect-re term accept-ldp-discover then policer management-10m	
+set firewall filter protect-re term accept-ldp-discover then count accept-ldp-discover	
+set firewall filter protect-re term accept-ldp-discover then accept	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-ldp-unicast from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-unicast from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-unicast from protocol tcp	
+set firewall filter protect-re term accept-ldp-unicast from port ldp	
+set firewall filter protect-re term accept-ldp-unicast then policer management-50m	
+set firewall filter protect-re term accept-ldp-unicast then count accept-ldp-unicast	
+set firewall filter protect-re term accept-ldp-unicast then accept	
+set firewall filter protect-re term accept-tldp-discover from source-prefix-list serials	
+set firewall filter protect-re term accept-tldp-discover from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-tldp-discover from destination-prefix-list myserials	
+set firewall filter protect-re term accept-tldp-discover from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-tldp-discover from protocol udp	
+set firewall filter protect-re term accept-tldp-discover from destination-port ldp	
+set firewall filter protect-re term accept-tldp-discover then policer management-10m	
+set firewall filter protect-re term accept-tldp-discover then count accept-ldp-discover	
+set firewall filter protect-re term accept-tldp-discover then accept	
+set firewall filter protect-re term accept-ldp-igmp from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-igmp from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-igmp from destination-prefix-list multicast-all-routers	
+set firewall filter protect-re term accept-ldp-igmp from protocol igmp	
+set firewall filter protect-re term accept-ldp-igmp then policer management-10m	
+set firewall filter protect-re term accept-ldp-igmp then count accept-ldp-igmp	
+set firewall filter protect-re term accept-ldp-igmp then accept	
+set firewall filter protect-re term accept-rsvp from source-prefix-list serials	
+set firewall filter protect-re term accept-rsvp from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-rsvp from destination-prefix-list serials	
+set firewall filter protect-re term accept-rsvp from destination-prefix-list loopbacks	
+set firewall filter protect-re term accept-rsvp from protocol rsvp	
+set firewall filter protect-re term accept-rsvp then policer management-10m	
+set firewall filter protect-re term accept-rsvp then count accept-rsvp	
+set firewall filter protect-re term accept-rsvp then accept	
+set firewall filter protect-re term accept-pim from source-prefix-list myserials	
+set firewall filter protect-re term accept-pim from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-pim from destination-prefix-list myserials	
+set firewall filter protect-re term accept-pim from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-pim from destination-prefix-list multicast-pim	
+set firewall filter protect-re term accept-pim from protocol pim	
+set firewall filter protect-re term accept-pim then policer management-5m	
+set firewall filter protect-re term accept-pim then count accept-pim	
+set firewall filter protect-re term accept-pim then accept	
+set firewall filter protect-re term accept-ssh from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-ssh from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ssh from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ssh from protocol tcp	
+set firewall filter protect-re term accept-ssh from source-port 1024-65535	
+set firewall filter protect-re term accept-ssh from destination-port ssh	
+set firewall filter protect-re term accept-ssh then policer management-5m	
+set firewall filter protect-re term accept-ssh then count accept-ssh	
+set firewall filter protect-re term accept-ssh then accept	
+set firewall filter protect-re term accept-snmp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-snmp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-snmp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-snmp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-snmp from protocol udp	
+set firewall filter protect-re term accept-snmp from destination-port snmp	
+set firewall filter protect-re term accept-snmp then policer management-10m	
+set firewall filter protect-re term accept-snmp then count accept-snmp	
+set firewall filter protect-re term accept-snmp then accept	
+set firewall filter protect-re term accept-ntp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-ntp from source-prefix-list myserials	
+set firewall filter protect-re term accept-ntp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ntp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ntp from protocol udp	
+set firewall filter protect-re term accept-ntp from port ntp	
+set firewall filter protect-re term accept-ntp then policer management-1m	
+set firewall filter protect-re term accept-ntp then count accept-ntp	
+set firewall filter protect-re term accept-ntp then accept	
+set firewall filter protect-re term accept-tacacs from source-prefix-list tacacs-servers	
+set firewall filter protect-re term accept-tacacs from destination-prefix-list myserials	
+set firewall filter protect-re term accept-tacacs from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-tacacs from protocol tcp	
+set firewall filter protect-re term accept-tacacs from protocol udp	
+set firewall filter protect-re term accept-tacacs from source-port tacacs	
+set firewall filter protect-re term accept-tacacs from source-port tacacs-ds	
+set firewall filter protect-re term accept-tacacs from tcp-established	
+set firewall filter protect-re term accept-tacacs then policer management-5m	
+set firewall filter protect-re term accept-tacacs then count accept-tacacs	
+set firewall filter protect-re term accept-tacacs then accept	
+set firewall filter protect-re term accept-icmp from source-prefix-list serials	
+set firewall filter protect-re term accept-icmp from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-icmp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-icmp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-icmp from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-icmp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-icmp from source-prefix-list icmp-allowed	
+set firewall filter protect-re term accept-icmp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-icmp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-icmp from protocol icmp	
+set firewall filter protect-re term accept-icmp from ttl-except 1	
+set firewall filter protect-re term accept-icmp from icmp-type echo-reply	
+set firewall filter protect-re term accept-icmp from icmp-type echo-request	
+set firewall filter protect-re term accept-icmp from icmp-type time-exceeded	
+set firewall filter protect-re term accept-icmp from icmp-type unreachable	
+set firewall filter protect-re term accept-icmp from icmp-type source-quench	
+set firewall filter protect-re term accept-icmp from icmp-type router-advertisement	
+set firewall filter protect-re term accept-icmp from icmp-type parameter-problem	
+set firewall filter protect-re term accept-icmp then policer management-10m	
+set firewall filter protect-re term accept-icmp then count accept-icmp	
+set firewall filter protect-re term accept-icmp then accept	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list serials	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-traceroute-udp from source-prefix-list icmp-allowed	
+set firewall filter protect-re term accept-traceroute-udp from protocol udp	
+set firewall filter protect-re term accept-traceroute-udp from ttl 1	
+set firewall filter protect-re term accept-traceroute-udp from destination-port 33435-33450	
+set firewall filter protect-re term accept-traceroute-udp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-udp then count accept-traceroute-udp	
+set firewall filter protect-re term accept-traceroute-udp then accept	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list serials	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-traceroute-icmp from source-prefix-list icmp-allowed	
+set firewall filter protect-re term accept-traceroute-icmp from protocol icmp	
+set firewall filter protect-re term accept-traceroute-icmp from ttl 1	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type echo-request	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type timestamp	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type time-exceeded	
+set firewall filter protect-re term accept-traceroute-icmp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-icmp then count accept-traceroute-icmp	
+set firewall filter protect-re term accept-traceroute-icmp then accept	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list serials	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-traceroute-tcp from source-prefix-list icmp-allowed	
+set firewall filter protect-re term accept-traceroute-tcp from protocol tcp	
+set firewall filter protect-re term accept-traceroute-tcp from ttl 1	
+set firewall filter protect-re term accept-traceroute-tcp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-tcp then count accept-traceroute-tcp	
+set firewall filter protect-re term accept-traceroute-tcp then accept	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list serials	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list loopbacks	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list ssh-clients	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list ntp-servers	
+set firewall filter protect-re term tcp-ddos-protect from destination-prefix-list myserials	
+set firewall filter protect-re term tcp-ddos-protect from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term tcp-ddos-protect from protocol tcp	
+set firewall filter protect-re term tcp-ddos-protect from tcp-flags "(syn & !ack) | fin | rst"	
+set firewall filter protect-re term tcp-ddos-protect then policer management-1m	
+set firewall filter protect-re term tcp-ddos-protect then count tcp-ddos-protect	
+set firewall filter protect-re term tcp-ddos-protect then accept	
+set firewall filter protect-re term discard-rsvp from protocol rsvp	
+set firewall filter protect-re term discard-rsvp then count discard-rsvp	
+set firewall filter protect-re term discard-rsvp then log	
+set firewall filter protect-re term discard-rsvp then discard	
+set firewall filter protect-re term discard-TTL_1-unknown from ttl 1	
+set firewall filter protect-re term discard-TTL_1-unknown then count discard-all-TTL_1-unknown	
+set firewall filter protect-re term discard-TTL_1-unknown then discard	
+set firewall filter protect-re term discard-tcp from protocol tcp	
+set firewall filter protect-re term discard-tcp then count discard-tcp	
+set firewall filter protect-re term discard-tcp then discard	
+set firewall filter protect-re term discard-netbios from protocol udp	
+set firewall filter protect-re term discard-netbios from destination-port 137	
+set firewall filter protect-re term discard-netbios then count discard-netbios	
+set firewall filter protect-re term discard-netbios then discard	
+set firewall filter protect-re term discard-udp from protocol udp	
+set firewall filter protect-re term discard-udp then count discard-udp	
+set firewall filter protect-re term discard-udp then discard	
+set firewall filter protect-re term discard-icmp from protocol icmp	
+set firewall filter protect-re term discard-icmp then count discard-icmp	
+set firewall filter protect-re term discard-icmp then discard	
+set firewall filter protect-re term discard-unknown then count discard-unknown	
+set firewall filter protect-re term discard-unknown then discard	
+	
+et firewall filter re-output term ldp from protocol tcp	
+set firewall filter re-output term ldp from protocol udp	
+set firewall filter re-output term ldp from port ldp	
+set firewall filter re-output term ldp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term ldp then accept	
+set firewall filter re-output term ldp then dscp cs6	
+set firewall filter re-output term pim from protocol pim	
+set firewall filter re-output term pim then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term pim then accept	
+set firewall filter re-output term pim then dscp cs6	
+set firewall filter re-output term rsvp from protocol rsvp	
+set firewall filter re-output term rsvp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term rsvp then accept	
+set firewall filter re-output term rsvp then dscp cs6	
+set firewall filter re-output term igmp from protocol igmp	
+set firewall filter re-output term igmp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term igmp then accept	
+set firewall filter re-output term igmp then dscp cs6	
+set firewall filter re-output term bgp from protocol tcp	
+set firewall filter re-output term bgp from port bgp	
+set firewall filter re-output term bgp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term bgp then accept	
+set firewall filter re-output term bgp then dscp cs6	
+set firewall filter re-output term rest then forwarding-class BEST_EFFORT	
+set firewall filter re-output term rest then accept	
+set firewall filter re-output term rest then dscp 000000	
+	
+	
