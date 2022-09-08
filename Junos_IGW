@@ -1,0 +1,789 @@
+set system commit synchronize	
+set system commit fast-synchronize	
+	
+set system login class super-user-local idle-timeout 3	
+set system login class super-user-local permissions all	
+set system login user admin uid 2000	
+set system login user admin class super-user-local	
+set system login user admin authentication encrypted-password "abcd"	
+set system login password minimum-length 9	
+set system root-authentication encrypted-password "$1$YGbLt1pW$LIZt91vskZtRQM/QnpFOB1"	
+	
+set system services ssh root-login deny	
+set system services ssh no-tcp-forwarding	
+set system services ssh protocol-version v2	
+set system services ssh max-sessions-per-connection 32	
+set system services ssh client-alive-count-max 3	
+set system services ssh client-alive-interval 120	
+set system services ssh connection-limit 20	
+set system services ssh rate-limit 20	
+set system services ssh key-exchange dh-group1-sha1 	
+set system services netconf ssh connection-limit 5	
+set system services netconf ssh rate-limit 5	
+	
+set system host-name <hostname>	
+set system configuration-database extend-size	(M, MX, PTX, and T i386 only) Extend the default size of the configuration database. The extended default size is based on the original default database size. A device with a default database size of 409.99 MB will extend to a maximum of 1049.99 MB, and a device with a default database size of 665.99 MB will extend to a maximum of 1305.99. 
+set system time-zone Asia/Riyadh	
+set system switchover-on-routing-crash	
+set system no-redirects	
+set system no-ping-record-route	
+set system no-ping-time-stamp	
+set system dump-on-panic	
+set system internet-options icmpv4-rate-limit packet-rate 5000	
+set system internet-options tcp-reset-syn-acknowledge	
+set system internet-options tcp-drop-synfin-set	
+set system internet-options no-tcp-reset drop-all-tcp	
+	
+set system authentication-order tacplus	
+set system authentication-order password	
+	
+set system ports console authentication-order password	
+set system ports console log-out-on-disconnect	
+set system ports console insecure	
+set system ports console type vt100	
+set system ports auxiliary disable	
+set system tacplus-server 1.1.1.1 secret "aaaa"	
+set system tacplus-server 1.1.1.1 single-connection	
+set system tacplus-server 1.1.1.1 source-address <loopback>	
+set system tacplus-server 1.1.1.2 secret "aaaa"	
+set system tacplus-server 1.1.1.2 single-connection	
+set system tacplus-server 1.1.1.2 source-address <loopback>	
+	
+set system accounting events login	
+set system accounting events interactive-commands	
+set system accounting destination tacplus server 1.1.1.1 secret "$9$LwONw2aZjfT3hSoGDHTQn69tORSyeKWLzF"	
+set system accounting destination tacplus server 1.1.1.1 timeout 5	
+set system accounting destination tacplus server 1.1.1.1 source-address <loopback>	
+set system accounting destination tacplus server 1.1.1.2 secret "$9$LwONw2aZjfT3hSoGDHTQn69tORSyeKWLzF"	
+set system accounting destination tacplus server 1.1.1.2 timeout 5	
+set system accounting destination tacplus server 1.1.1.2 source-address <loopback>	
+	
+set system scripts synchronize	
+	
+set system login message "***********************************************************************************************************************************\nUYARI MESAJI:Superonline Bilgi Guvenligi Politikalari geregi bu sistemde yapacaginiz her turlu islem kayit altina alinmaktadir.\nYapilacak her turlu yetkisiz islemler yazili/sozlu uyari verilmesi, Superonlinedeki isine son verilmesine ve/veya aleyhinde\nADLI VE CEZAI yasal islemler baslatilmasina varincaya kadar cesitli disiplin islemleriyle sonuclanabilir.\n\nWARNING MESSAGE:According to Superonline Information Security Policies, all activities are logged and monitored. Misuse or \nunauthorized activities may result in legal prosecution or penalties.\n\nErisim / Contact: Superonline NCC , ncc@superonline.net , +90 533 210 92 92, www.superonline.net\n***********************************************************************************************************************************"	
+set system login announcement "***********************************************************************************************************************************\nUYARI MESAJI:Superonline Bilgi Guvenligi Politikalari geregi bu sistemde yapacaginiz her turlu islem kayit altina alinmaktadir.\nYapilacak her turlu yetkisiz islemler yazili/sozlu uyari verilmesi, Superonlinedeki isine son verilmesine ve/veya aleyhinde\nADLI VE CEZAI yasal islemler baslatilmasina varincaya kadar cesitli disiplin islemleriyle sonuclanabilir.\n\nWARNING MESSAGE:According to Superonline Information Security Policies, all activities are logged and monitored. Misuse or \nunauthorized activities may result in legal prosecution or penalties.\n\nErisim / Contact: Superonline NCC , ncc@superonline.net , +90 533 210 92 92, www.superonline.net\n***********************************************************************************************************************************\n"	
+set system syslog archive size 1m	
+set system syslog archive files 10	
+set system syslog host 2.2.2.2 any any	
+set system syslog host 2.2.2.2 source-address <loopback>	
+set system syslog host other-routing-engine any error	
+set system syslog host other-routing-engine log-prefix other-RE	
+set system syslog host 2.2.2.3 any any	
+set system syslog host 2.2.2.3 source-address  <loopback>	
+set system syslog file messages any info	info  yerine "notice" seçeneği de mevcut
+set system syslog file messages authorization info	
+set system syslog file messages archive world-readable	
+set system syslog file messages explicit-priority	
+set system syslog file interactive-commands interactive-commands any	
+set system syslog file security authorization info	
+set system syslog file commands interactive-commands info	
+set system syslog file firewall-filter-log firewall any	
+set system syslog file default-log-messages any info	
+set system syslog file default-log-messages match "(requested 'commit' operation)|(copying configuration to juniper.save)|(commit complete)|ifAdminStatus|(FRU power)|(FRU removal)|(FRU insertion)|(link UP)|transitioned|Transferred|transfer-file|(license add)|(license delete)|(package -X update)|(package -X delete)|(FRU Online)|(FRU Offline)|(plugged in)|(unplugged)|CFMD_CCM_DEFECT| LFMD_3AH | RPD_MPLS_PATH_BFD|(Master Unchanged, Members Changed)|(Master Changed, Members Changed)|(Master Detected, Members Changed)|(vc add)|(vc delete)|(Master detected)|(Master changed)|(Backup detected)|(Backup changed)|(interface vcp-)|(AIS_DATA_AVAILABLE)"	
+set system syslog file default-log-messages structured-data	
+set system syslog file messages-disable-pfe-script pfe any	
+set system syslog file messages-disable-pfe-script match "FI.* Cell underflow at the state|FI Link sanity checks, ty|FI: Link sanity checks -"	
+set system syslog file messages-disable-pfe-script allow-duplicates	
+set system syslog file messages-disable-pfe-script archive size 1m	
+set system syslog file messages-disable-pfe-script archive files 1	
+set system syslog console any alert	
+set system syslog time-format year	
+set system syslog time-format millisecond	
+set system syslog source-address <loopback>	
+	
+set system ntp server 4.4.4.4 prefer	
+set system ntp server 4.4.4.5
+set system ntp source-address <loopback>	
+	
+set chassis redundancy routing-engine 0 master	
+set chassis redundancy routing-engine 1 backup	
+set chassis redundancy failover on-loss-of-keepalives	
+set chassis redundancy failover on-disk-failure	
+set chassis redundancy graceful-switchover	
+	
+set chassis aggregated-devices ethernet device-count 128	
+set chassis aggregated-devices maximum-links 64	cihaza göre değiştirilebilir.
+set chassis fabric redundancy-mode increased-bandwidth	Sadece MX serisi cihazlarda kullanıyoruz.Tüm fabric plane lerin aynı anda kullanılmasını sağlıyor. MX cihazlarda default mode
+set chassis fpc <x> error fatal action alarm	
+set chassis fpc  <x> error fatal action disable-pfe	action olarak "log" da tercih edilebilir. 
+set chassis fpc  <x> error fatal action reset	https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/action-edit-chassis-fpc-error.html
+set chassis fpc <x>  fabric blackhole-action offline	
+set chassis fpc <x> sampling-instance IPFIX-INSTANCE	
+set chassis fpc <x> inline-services flow-table-size ipv4-flow-table-size 15	
+set chassis fpc <x> pic <x> port <x> speed 10g	gerektiği durumda uygulanmalıdır. 
+set chassis alarm management-ethernet link-down ignore	
+	
+set services flow-monitoring version-ipfix template IPFIX-ipv4-TEMPLATE flow-active-timeout 60	
+set services flow-monitoring version-ipfix template IPFIX-ipv4-TEMPLATE flow-inactive-timeout 30	
+set services flow-monitoring version-ipfix template IPFIX-ipv4-TEMPLATE template-refresh-rate seconds 60	
+set services flow-monitoring version-ipfix template IPFIX-ipv4-TEMPLATE option-refresh-rate seconds 60	
+set services flow-monitoring version-ipfix template IPFIX-ipv4-TEMPLATE ipv4-template	
+set services flow-monitoring version-ipfix template IPFIX-ipv6-TEMPLATE flow-active-timeout 60	
+set services flow-monitoring version-ipfix template IPFIX-ipv6-TEMPLATE flow-inactive-timeout 30	
+set services flow-monitoring version-ipfix template IPFIX-ipv6-TEMPLATE ipv6-template	
+	
+set interfaces interface-range ALL_PHY_UPLINKS member xe-*/*/*	
+set interfaces interface-range ALL_PHY_UPLINKS member et-*/*/*	
+set interfaces interface-range ALL_PHY_UPLINKS member ge-*/*/*	
+	
+set interfaces lo0 unit 0 family inet filter input protect-re	
+set interfaces lo0 unit 0 family inet filter output re-output	
+set interfaces lo0 unit 0 family inet address <loopback>	
+set interfaces lo0 unit 0 family iso address <isis net-id>	
+set interfaces lo0 unit 0 family inet6 address <loopback>	
+	
+set snmp v3 usm local-engine user snmp-user-read authentication-md5 authentication-key "z"	
+set snmp v3 usm local-engine user snmp-user-read privacy-des privacy-key "$9$"	
+set snmp v3 usm local-engine user snmp-user-write authentication-md5 authentication-key "$9$c"	
+set snmp v3 usm local-engine user snmp-user-write privacy-des privacy-key "$9$1"	
+set snmp v3 vacm security-to-group security-model usm security-name snmp-user-read group snmp-read	
+set snmp v3 vacm security-to-group security-model usm security-name snmp-user-write group snmp-write	
+set snmp v3 vacm access group snmp-read default-context-prefix security-model any security-level privacy read-view include-all	
+set snmp v3 vacm access group snmp-read default-context-prefix security-model any security-level privacy write-view exclude-all	
+set snmp v3 vacm access group snmp-write default-context-prefix security-model any security-level privacy read-view include-all	
+set snmp v3 vacm access group snmp-write default-context-prefix security-model any security-level privacy write-view include-all	
+set snmp view include-all oid .1 include	
+set snmp view exclude-all oid .1 exclude	
+	
+set snmp community telecomsnmp authorization read-only	
+set snmp community telecomsnmp clients X.X.X.X/X	Prefix-Lists  & SNMP Clients içerisinde mevcut
+	
+set snmp trap-options source-address lo0	
+set snmp trap-group telecomsnmp version v2	
+set snmp trap-group telecomsnmp categories authentication	
+set snmp trap-group telecomsnmp categories chassis	
+set snmp trap-group telecomsnmp categories link	
+set snmp trap-group telecomsnmp categories routing	
+set snmp trap-group telecomsnmp categories configuration	
+set snmp trap-group telecomsnmp targets 6.6.6.6
+set snmp trap-group telecomsnmp 6.6.6.6
+	
+set forwarding-options sampling instance IPFIX-INSTANCE input rate 5000	
+set forwarding-options sampling instance IPFIX-INSTANCE input max-packets-per-second 65535	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output flow-inactive-timeout 30	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output flow-active-timeout 60	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output flow-server <netflow-ip> port 9996	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output flow-server <netflow-ip> source-address <loopback-ip>	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output flow-server <netflow-ip> version-ipfix template IPFIX-ipv4-TEMPLATE	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet output inline-jflow source-address <loopback-ip>	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output flow-inactive-timeout 30	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output flow-active-timeout 60	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output flow-server <netflow-ip> port 9996	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output flow-server <netflow-ip> source-address <loopback-ip>	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output flow-server <netflow-ip> version-ipfix template IPFIX-ipv6-TEMPLATE	
+set forwarding-options sampling instance IPFIX-INSTANCE family inet6 output inline-jflow source-address <loopback-ip>	
+	
+set forwarding-options load-balance indexed-load-balance	
+set forwarding-options load-balance per-flow hash-seed	
+set forwarding-options enhanced-hash-key family inet incoming-interface-index	
+set forwarding-options enhanced-hash-key family inet type-of-service	
+set forwarding-options enhanced-hash-key family inet6 incoming-interface-index	
+set forwarding-options enhanced-hash-key family inet6 traffic-class	
+set forwarding-options enhanced-hash-key family mpls label-1-exp	
+set forwarding-options enhanced-hash-key family mpls incoming-interface-index	
+set forwarding-options enhanced-hash-key family multiservice incoming-interface-index	
+set forwarding-options enhanced-hash-key family multiservice outer-priority	
+	
+set policy-options prefix-list bgp-neighbors apply-path "protocols bgp group <*> neighbor <*>"	
+set policy-options prefix-list bgp-neighbors-logical-systems apply-path "logical-systems <*> protocols bgp group <*> neighbor <*>"	
+set policy-options prefix-list bgp-neighbors-dynamic apply-path "protocols bgp group <*> allow <*>" 	
+set policy-options prefix-list bgp-neighbors-dynamic-logical-systems apply-path "logical-systems <*>  protocols bgp group <*> allow <*>" 	
+set policy-options prefix-list bgp-neighbors-dynamic-vpn apply-path "routing-instances <*> protocols bgp group <*> allow <*>" 	
+set policy-options prefix-list bgp-neighbors-dynamic-vpn-logical-systems apply-path "logical-systems <*> routing-instances <*>  protocols bgp group <*> allow <*>" 	
+set policy-options prefix-list bgp-neighbors-vpn apply-path " routing-instances <*> protocols bgp group <*> neighbor <*>"	
+set policy-options prefix-list bgp-neighbors-vpn-logical-systems apply-path "logical-systems <*> routing-instances <*> protocols bgp group <*> neighbor <*>"	
+set policy-options prefix-list multicast-all-routers 224.0.0.2/32	
+set policy-options prefix-list multicast-pim 224.0.0.13/32	
+set policy-options prefix-list tacacs-servers apply-path "system tacplus-server <*>"	
+set policy-options prefix-list ntp-servers apply-path "system ntp server <*>"	
+set policy-options prefix-list snmp-trap-servers apply-path "snmp trap-group <*> targets <*>"	
+set policy-options prefix-list snmp-community-clients apply-path "snmp community <*> clients <*>"	
+set policy-options prefix-list myserials apply-path "interfaces <*> unit <*> family inet address <*>"	
+set policy-options prefix-list myserials-logical-systems apply-path "logical-systems <*> interfaces <*> unit <*> family inet address <*>"	
+set policy-options prefix-list myloopback apply-path "interfaces lo0 unit <*> family inet address <*>"	
+set policy-options prefix-list myloopback-logical-systems apply-path "logical-systems <*> interfaces lo0 unit <*> family inet address <*>"	
+set policy-options prefix-list loopbacks <all-loopbacks>	
+set policy-options prefix-list icmp-allowed <icmp-allowed>	
+set policy-options prefix-list ssh-clients <ssh-allowed>	
+set policy-options prefix-list serials <serials>	
+	
+set policy-options policy-statement LDP-advertise from protocol direct	
+set policy-options policy-statement LDP-advertise then accept	
+	
+set policy-options policy-statement ibgp-export-to-internet-rr term ADD-COMMUNITY then community add <router-özel-community>	her routera ait özel community var o eklenir. 
+set policy-options policy-statement ibgp-export-to-internet-rr term ADD-COMMUNITY then next term	
+set policy-options policy-statement ibgp-export-to-internet-rr term LOCAL_LOOPBACKS from prefix-list myloopback	
+set policy-options policy-statement ibgp-export-to-internet-rr term LOCAL_LOOPBACKS from prefix-list myloopback-logical-systems	
+set policy-options policy-statement ibgp-export-to-internet-rr term LOCAL_LOOPBACKS then reject	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_no_export from protocol direct	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_no_export from route-filter 0.0.0.0/0 prefix-length-range /25-/32	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_no_export then community add no-export	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_no_export then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT from protocol direct	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT from route-filter 0.0.0.0/0 prefix-length-range /13-/24	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6_no_export from family inet6	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6_no_export from protocol direct	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6_no_export from route-filter ::/0 prefix-length-range /49-/128	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6_no_export then community add no-export	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6_no_export then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6 from family inet6	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6 from protocol direct	
+set policy-options policy-statement ibgp-export-to-internet-rr term DIRECT_IPv6 from route-filter ::/0 prefix-length-range /32-/48	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_default from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_default from route-filter 0.0.0.0/0 exact	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_default then reject	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_default from family inet6	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_default from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_default from route-filter ::/0 exact	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_default then reject	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_5 from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_5 from tag 5	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_5 then reject	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_6 from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_6 from tag 6	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_6 then local-preference 50	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_6 then next term	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_10 from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_10 from tag 10	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_10 then local-preference 250	
+set policy-options policy-statement ibgp-export-to-internet-rr term static_tag_10 then next term	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC from route-filter 0.0.0.0/0 prefix-length-range /13-/24	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_no_export from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_no_export from route-filter 0.0.0.0/0 prefix-length-range /25-/32	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_no_export then community add no-export	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_no_export then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6 from family inet6	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6 from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6 from route-filter ::/0 prefix-length-range /32-/48	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6 then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_no_export from family inet6	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_no_export from protocol static	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_no_export from route-filter ::/0 prefix-length-range /49-/128	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_no_export then community add no-export	
+set policy-options policy-statement ibgp-export-to-internet-rr term STATIC_IPv6_no_export then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term PROVIDER from community provider	
+set policy-options policy-statement ibgp-export-to-internet-rr term PROVIDER then next-hop self	
+set policy-options policy-statement ibgp-export-to-internet-rr term PROVIDER then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term ALL-PEERING from community all-peering	
+set policy-options policy-statement ibgp-export-to-internet-rr term ALL-PEERING then next-hop self	
+set policy-options policy-statement ibgp-export-to-internet-rr term ALL-PEERING then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term ARBOR from community all-arbor	
+set policy-options policy-statement ibgp-export-to-internet-rr term ARBOR then accept	
+set policy-options policy-statement ibgp-export-to-internet-rr term REST then reject	
+	
+set policy-options policy-statement ibgp-import-from-internet-rr term blackhole from community sol-bh666	
+set policy-options policy-statement ibgp-import-from-internet-rr term blackhole then next-hop discard	
+set policy-options policy-statement ibgp-import-from-internet-rr term null0 from community sol-null0	
+set policy-options policy-statement ibgp-import-from-internet-rr term null0 then next-hop discard	
+set policy-options policy-statement ibgp-import-from-internet-rr term yasaklilar from community yasaklilar	
+set policy-options policy-statement ibgp-import-from-internet-rr term yasaklilar then community add no-advertise	
+set policy-options policy-statement ibgp-import-from-internet-rr term yasaklilar then next-hop discard	
+set policy-options policy-statement ibgp-import-from-internet-rr term yasaklilar then reject	
+set policy-options policy-statement ibgp-import-from-internet-rr term last then accept	
+	
+set policy-options policy-statement permit-all term last then accept	
+set policy-options policy-statement permit-all then accept	
+set policy-options policy-statement pplb then load-balance per-packet	
+set policy-options policy-statement reject-all term last then reject	
+set policy-options policy-statement reject-all then reject	
+	
+set policy-options community all members 65000:*	
+set policy-options community all-arbor members "65000:8..$"	
+set policy-options community all-peering members 65000:3000	
+set policy-options community bh444 members 65000:444	
+set policy-options community bh666 members 65000:666	
+set policy-options community no-advertise members no-advertise	
+set policy-options community no-export members no-export	
+set policy-options community <hostname> members <router-special-community>	örnek: router_name_community members 65140:14106
+	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class NETWORK_CONTROL loss-priority low code-points 110	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class NETWORK_CONTROL loss-priority high code-points 111	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class VOICE loss-priority low code-points 101	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class MCAST_SIGNALING loss-priority low code-points 100	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class SOLTRAFFIC loss-priority low code-points 011	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class PREMIUM loss-priority low code-points 010	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class BUSINESS loss-priority low code-points 001	
+set class-of-service classifiers exp Uplink_EXP_Classification forwarding-class BEST_EFFORT loss-priority low code-points 000	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class NETWORK_CONTROL loss-priority high code-points 111	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class NETWORK_CONTROL loss-priority low code-points 110	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class VOICE loss-priority low code-points 101	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class MCAST_SIGNALING loss-priority low code-points 100	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class SOLTRAFFIC loss-priority low code-points 011	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class PREMIUM loss-priority low code-points 010	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class BUSINESS loss-priority low code-points 001	
+set class-of-service classifiers inet-precedence Uplink_Precedence_Classification forwarding-class BEST_EFFORT loss-priority low code-points 000	
+set class-of-service host-outbound-traffic forwarding-class NETWORK_CONTROL	
+set class-of-service host-outbound-traffic dscp-code-point 111000	line card lara dağıtılmış halde çalışan, PPM prosesin sorumlu olduğu paketlerin ve tüm routing engine tarafından oluşturulan paketlerin işaretlenmesine ve doğru kuyruğa alınması sağlanır. Bir sonraki loopback altına girilen filtre ise bu filtreden daha üstündür  ve RE tarafından yaratılan paketler için geçerlidir. bu sayede "lacp, bfd" gibi paketler 111 ile işaretlenirken, RE tarafından yaratılan OSPF, LDP gibi paketler 110 ile işaretlenir. RE tarafından oluşturulan icmp-reply benzeri paketler ise son term e gelerek best-effort kuyruğuna alınır. 
+set class-of-service forwarding-classes class NETWORK_CONTROL queue-num 6	https://www.juniper.net/documentation/en_US/junos/topics/concept/cos-host-outbound-traffic-default-classification-and-dscp-remarking.html
+set class-of-service forwarding-classes class VOICE queue-num 5	This feature overrides the host-outbound-traffic settings for the Routing Engine output traffic only. 
+set class-of-service forwarding-classes class MCAST_SIGNALING queue-num 4	
+set class-of-service forwarding-classes class SOLTRAFFIC queue-num 3	
+set class-of-service forwarding-classes class PREMIUM queue-num 2	
+set class-of-service forwarding-classes class BUSINESS queue-num 1	
+set class-of-service forwarding-classes class BEST_EFFORT queue-num 0	
+	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class NETWORK_CONTROL loss-priority low code-point 110	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class NETWORK_CONTROL loss-priority high code-point 111	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class VOICE loss-priority low code-point 101	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class VOICE loss-priority high code-point 101	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class MCAST_SIGNALING loss-priority low code-point 100	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class MCAST_SIGNALING loss-priority high code-point 100	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class PLATINUM loss-priority low code-point 011	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class PLATINUM loss-priority high code-point 011	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class GOLD loss-priority low code-point 010	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class GOLD loss-priority high code-point 010	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class SILVER loss-priority low code-point 001	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class SILVER loss-priority high code-point 001	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class BEST_EFFORT loss-priority low code-point 000	
+set class-of-service rewrite-rules exp Uplink_EXP_Rewrite forwarding-class BEST_EFFORT loss-priority high code-point 000	
+	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class NETWORK_CONTROL scheduler BACKBONE_UPLINK_NETWORK_CONTROL	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class VOICE scheduler BACKBONE_UPLINK_VOICE	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class MCAST_SIGNALING scheduler BACKBONE_UPLINK_MCAST_SIGNALING	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class PLATINUM scheduler BACKBONE_UPLINK_SOLTRAFFIC	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class GOLD scheduler BACKBONE_UPLINK_PREMIUM	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class SILVER scheduler BACKBONE_UPLINK_BUSINESS	
+set class-of-service scheduler-maps BACKBONE_UPLINK_QOS_OUT forwarding-class BEST_EFFORT scheduler BACKBONE_UPLINK_BEST_EFFORT	
+	
+	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL transmit-rate percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL buffer-size percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_NETWORK_CONTROL priority high	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE transmit-rate percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE transmit-rate rate-limit	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE buffer-size temporal 10k	
+set class-of-service schedulers BACKBONE_UPLINK_VOICE priority strict-high	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING transmit-rate percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING buffer-size percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_MCAST_SIGNALING priority high	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM transmit-rate percent 28	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM buffer-size percent 28	
+set class-of-service schedulers BACKBONE_UPLINK_PLATINUM priority medium-high	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD transmit-rate percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD buffer-size percent 15	
+set class-of-service schedulers BACKBONE_UPLINK_GOLD priority medium-low	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER transmit-rate percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER buffer-size percent 20	
+set class-of-service schedulers BACKBONE_UPLINK_SILVER priority low	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT transmit-rate percent 1	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT buffer-size remainder	
+set class-of-service schedulers BACKBONE_UPLINK_BEST_EFFORT priority low	
+	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 0.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 10.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 100.64.0.0/10	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 127.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 169.254.0.0/16	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 172.16.0.0/12	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 192.0.0.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 192.0.2.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 192.168.0.0/16	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 198.18.0.0/15	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 198.51.100.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 203.0.113.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed from source-address 224.0.0.0/3	
+set firewall family inet filter INFRA-PROTECTION term deny-from-spoofed then discard	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 0.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 10.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 100.64.0.0/10	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 127.0.0.0/8	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 169.254.0.0/16	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 172.16.0.0/12	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 192.0.0.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 192.0.2.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 192.168.0.0/16	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 198.18.0.0/15	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 198.51.100.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 203.0.113.0/24	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon from destination-address 224.0.0.0/3	
+set firewall family inet filter INFRA-PROTECTION term deny-to-bogon then discard	
+set firewall family inet filter INFRA-PROTECTION term loopbacks from destination-address 1.1.1.0/24	
+set firewall family inet filter INFRA-PROTECTION term loopbacks then discard	
+set firewall family inet filter INFRA-PROTECTION term loopbacks_source from source-address 1.1.1.0/24
+set firewall family inet filter INFRA-PROTECTION term loopbacks_source then discard	
+set firewall family inet filter INFRA-PROTECTION term serial_blocks from destination-address 2.2.2.0/24
+set firewall family inet filter INFRA-PROTECTION term serial_blocks then discard	
+set firewall family inet filter INFRA-PROTECTION term serial_blocks_source from source-address 2.2.2.0/24
+set firewall family inet filter INFRA-PROTECTION term serial_blocks_source then discard	
+
+set firewall family inet filter INFRA-PROTECTION term rest then forwarding-class BEST_EFFORT	
+set firewall family inet filter INFRA-PROTECTION term rest then accept	
+set firewall family inet filter INFRA-PROTECTION term rest then dscp be	
+	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 0000::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 0100::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 0400::/6	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 0800::/5	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 4000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 6000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 8000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address a000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address c000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address e000::/4	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address f000::/5	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address f800::/6	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address fe00::/9	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address fec0::/10	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 2d00:0000::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 2e00:0000::/7	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned from source-address 3000:0000::/4	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ipv6-unassigned then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 0000::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 0100::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 0400::/6	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 0800::/5	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 4000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 6000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 8000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address a000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address c000::/3	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address e000::/4	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address f000::/5	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address f800::/6	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address fe00::/9	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address fec0::/10	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 2d00:0000::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 2e00:0000::/7	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned from destination-address 3000:0000::/4	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ipv6-unassigned then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-spoofed from source-address ::/128	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-spoofed from source-address ::1/128	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-spoofed from source-address fc00::/7	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-spoofed from source-address ff00::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-spoofed then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-bogon from destination-address ::/128	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-bogon from destination-address ::1/128	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-bogon from destination-address fc00::/7	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-bogon from destination-address ff00::/8	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-bogon then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ietf-protocol-spoofed from destination-address 2001::/23	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-to-ietf-protocol-spoofed then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term permit-from-ipv6-ietf-protocol-routable from source-address 2001:4:112::/48	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term permit-from-ipv6-ietf-protocol-routable from source-address 2002::/16	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term permit-from-ipv6-ietf-protocol-routable then accept	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ietf-protocol-spoofed from source-address 2001::/23	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term deny-from-ietf-protocol-spoofed then discard	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term rest then forwarding-class BEST_EFFORT	
+set firewall family inet6 filter INFRA-PROTECTION-IPv6 term rest then accept	
+	
+set firewall policer management-1m if-exceeding bandwidth-limit 1m	
+set firewall policer management-1m if-exceeding burst-size-limit 625k	
+set firewall policer management-1m then discard	
+set firewall policer management-5m if-exceeding bandwidth-limit 5m	
+set firewall policer management-5m if-exceeding burst-size-limit 625k	
+set firewall policer management-5m then discard	
+set firewall policer management-10m if-exceeding bandwidth-limit 10m	
+set firewall policer management-10m if-exceeding burst-size-limit 625k	
+set firewall policer management-10m then discard	
+set firewall policer management-50m if-exceeding bandwidth-limit 50m	
+set firewall policer management-50m if-exceeding burst-size-limit 625k	
+set firewall policer management-50m then discard	
+set firewall policer management-100m if-exceeding bandwidth-limit 100m	
+set firewall policer management-100m if-exceeding burst-size-limit 625k	
+set firewall policer management-100m then discard	
+	
+set firewall filter re-output term ldp from protocol tcp	
+set firewall filter re-output term ldp from protocol udp	
+set firewall filter re-output term ldp from port ldp	
+set firewall filter re-output term ldp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term ldp then accept	
+set firewall filter re-output term ldp then dscp cs6	
+set firewall filter re-output term pim from protocol pim	
+set firewall filter re-output term pim then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term pim then accept	
+set firewall filter re-output term pim then dscp cs6	
+set firewall filter re-output term rsvp from protocol rsvp	
+set firewall filter re-output term rsvp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term rsvp then accept	
+set firewall filter re-output term rsvp then dscp cs6	
+set firewall filter re-output term igmp from protocol igmp	
+set firewall filter re-output term igmp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term igmp then accept	
+set firewall filter re-output term igmp then dscp cs6	
+set firewall filter re-output term bgp from protocol tcp	
+set firewall filter re-output term bgp from port bgp	
+set firewall filter re-output term bgp then forwarding-class NETWORK_CONTROL	
+set firewall filter re-output term bgp then accept	
+set firewall filter re-output term bgp then dscp cs6	
+set firewall filter re-output term rest then forwarding-class BEST_EFFORT	
+set firewall filter re-output term rest then accept	
+set firewall filter re-output term rest then dscp 000000	
+	
+set firewall filter protect-re term small-packets from packet-length 0-24	
+set firewall filter protect-re term small-packets then count protect-re-small-packets	
+set firewall filter protect-re term small-packets then syslog	
+set firewall filter protect-re term small-packets then discard	
+set firewall filter protect-re term first-fragment from first-fragment	
+set firewall filter protect-re term first-fragment from protocol tcp	
+set firewall filter protect-re term first-fragment from protocol udp	
+set firewall filter protect-re term first-fragment from protocol icmp	
+set firewall filter protect-re term first-fragment from protocol rsvp	
+set firewall filter protect-re term first-fragment from protocol igmp	
+set firewall filter protect-re term first-fragment from protocol pim	
+set firewall filter protect-re term first-fragment then count no-fragment	
+set firewall filter protect-re term first-fragment then syslog	
+set firewall filter protect-re term first-fragment then discard	
+set firewall filter protect-re term is-fragment from is-fragment	
+set firewall filter protect-re term is-fragment from protocol tcp	
+set firewall filter protect-re term is-fragment from protocol udp	
+set firewall filter protect-re term is-fragment from protocol icmp	
+set firewall filter protect-re term is-fragment from protocol rsvp	
+set firewall filter protect-re term is-fragment from protocol igmp	
+set firewall filter protect-re term is-fragment from protocol pim	
+set firewall filter protect-re term is-fragment then count no-fragment	
+set firewall filter protect-re term is-fragment then syslog	
+set firewall filter protect-re term is-fragment then discard	
+set firewall filter protect-re term discard-ip-options from ip-options any	
+set firewall filter protect-re term discard-ip-options from protocol-except rsvp	
+set firewall filter protect-re term discard-ip-options then count discard-ip-options	
+set firewall filter protect-re term discard-ip-options then discard	
+set firewall filter protect-re term accept-bfd from source-prefix-list myserials	
+set firewall filter protect-re term accept-bfd from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bfd from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myserials	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bfd from destination-prefix-list myloopback	
+set firewall filter protect-re term accept-bfd from protocol udp	
+set firewall filter protect-re term accept-bfd from source-port 49152-65535	
+set firewall filter protect-re term accept-bfd from destination-port 3784-3785	
+set firewall filter protect-re term accept-bfd from destination-port 6784	
+set firewall filter protect-re term accept-bfd then policer management-5m	
+set firewall filter protect-re term accept-bfd then count accept-bfd	
+set firewall filter protect-re term accept-bfd then accept	
+set firewall filter protect-re term accept-ldp-discover from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-discover from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-discover from destination-prefix-list multicast-all-routers	
+set firewall filter protect-re term accept-ldp-discover from protocol udp	
+set firewall filter protect-re term accept-ldp-discover from destination-port ldp	
+set firewall filter protect-re term accept-ldp-discover then policer management-10m	
+set firewall filter protect-re term accept-ldp-discover then count accept-ldp-discover	
+set firewall filter protect-re term accept-ldp-discover then accept	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-unicast from source-prefix-list loopbacks	
+set firewall filter protect-re term accept-ldp-unicast from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-unicast from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-unicast from protocol tcp	
+set firewall filter protect-re term accept-ldp-unicast from port ldp	
+set firewall filter protect-re term accept-ldp-unicast then policer management-50m	
+set firewall filter protect-re term accept-ldp-unicast then count accept-ldp-unicast	
+set firewall filter protect-re term accept-ldp-unicast then accept	
+set firewall filter protect-re term accept-ldp-igmp from source-prefix-list myserials	
+set firewall filter protect-re term accept-ldp-igmp from source-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ldp-igmp from destination-prefix-list multicast-all-routers	
+set firewall filter protect-re term accept-ldp-igmp from protocol igmp	
+set firewall filter protect-re term accept-ldp-igmp then policer management-10m	
+set firewall filter protect-re term accept-ldp-igmp then count accept-ldp-igmp	
+set firewall filter protect-re term accept-ldp-igmp then accept	
+set firewall filter protect-re term accept-bgp from source-prefix-list bgp-neighbors	
+set firewall filter protect-re term accept-bgp from source-prefix-list bgp-neighbors-logical-systems	
+set firewall filter protect-re term accept-bgp from source-prefix-list bgp-neighbors-dynamic	
+set firewall filter protect-re term accept-bgp from source-prefix-list bgp-neighbors-dynamic-logical-systems 	
+set firewall filter protect-re term accept-bgp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-bgp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bgp from protocol tcp	
+set firewall filter protect-re term accept-bgp from port bgp	
+set firewall filter protect-re term accept-bgp then count accept-bgp	
+set firewall filter protect-re term accept-bgp then accept	
+set firewall filter protect-re term accept-bgp-vpn from source-prefix-list bgp-neighbors-vpn	
+set firewall filter protect-re term accept-bgp-vpn from source-prefix-list bgp-neighbors-vpn-logical-systems	
+set firewall filter protect-re term accept-bgp-vpn from source-prefix-list bgp-neighbors-dynamic-vpn-logical-systems	
+set firewall filter protect-re term accept-bgp-vpn from source-prefix-list bgp-neighbors-dynamic-vpn 	
+set firewall filter protect-re term accept-bgp-vpn from destination-prefix-list myserials	
+set firewall filter protect-re term accept-bgp-vpn from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-bgp-vpn from protocol tcp	
+set firewall filter protect-re term accept-bgp-vpn from port bgp	
+set firewall filter protect-re term accept-bgp-vpn then count accept-bgp-vpn	
+set firewall filter protect-re term accept-bgp-vpn then accept	
+set firewall filter protect-re term accept-ssh from source-prefix-list ssh-clients	
+set firewall filter protect-re term accept-ssh from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ssh from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ssh from protocol tcp	
+set firewall filter protect-re term accept-ssh from source-port 1024-65535	
+set firewall filter protect-re term accept-ssh from destination-port ssh	
+set firewall filter protect-re term accept-ssh then policer management-5m	
+set firewall filter protect-re term accept-ssh then count accept-ssh	
+set firewall filter protect-re term accept-ssh then accept	
+set firewall filter protect-re term accept-snmp from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term accept-snmp from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term accept-snmp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-snmp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-snmp from protocol udp	
+set firewall filter protect-re term accept-snmp from destination-port snmp	
+set firewall filter protect-re term accept-snmp then policer management-10m	
+set firewall filter protect-re term accept-snmp then count accept-snmp	
+set firewall filter protect-re term accept-snmp then accept	
+set firewall filter protect-re term accept-ntp from source-prefix-list ntp-servers	
+set firewall filter protect-re term accept-ntp from source-prefix-list myserials	
+set firewall filter protect-re term accept-ntp from destination-prefix-list myserials	
+set firewall filter protect-re term accept-ntp from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-ntp from protocol udp	
+set firewall filter protect-re term accept-ntp from destination-port ntp	
+set firewall filter protect-re term accept-ntp then policer management-1m	
+set firewall filter protect-re term accept-ntp then count accept-ntp	
+set firewall filter protect-re term accept-ntp then accept	
+set firewall filter protect-re term accept-tacacs from source-prefix-list tacacs-servers	
+set firewall filter protect-re term accept-tacacs from destination-prefix-list myserials	
+set firewall filter protect-re term accept-tacacs from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term accept-tacacs from protocol tcp	
+set firewall filter protect-re term accept-tacacs from protocol udp	
+set firewall filter protect-re term accept-tacacs from source-port tacacs	
+set firewall filter protect-re term accept-tacacs from source-port tacacs-ds	
+set firewall filter protect-re term accept-tacacs from tcp-established	
+set firewall filter protect-re term accept-tacacs then policer management-5m	
+set firewall filter protect-re term accept-tacacs then count accept-tacacs	
+set firewall filter protect-re term accept-tacacs then accept	
+set firewall filter protect-re term accept-icmp from protocol icmp	
+set firewall filter protect-re term accept-icmp from ttl-except 1	
+set firewall filter protect-re term accept-icmp from icmp-type echo-reply	
+set firewall filter protect-re term accept-icmp from icmp-type echo-request	
+set firewall filter protect-re term accept-icmp from icmp-type time-exceeded	
+set firewall filter protect-re term accept-icmp from icmp-type unreachable	
+set firewall filter protect-re term accept-icmp from icmp-type source-quench	
+set firewall filter protect-re term accept-icmp from icmp-type router-advertisement	
+set firewall filter protect-re term accept-icmp from icmp-type parameter-problem	
+set firewall filter protect-re term accept-icmp then policer management-10m	
+set firewall filter protect-re term accept-icmp then count accept-icmp	
+set firewall filter protect-re term accept-icmp then accept	
+set firewall filter protect-re term accept-traceroute-udp from protocol udp	
+set firewall filter protect-re term accept-traceroute-udp from ttl 1	
+set firewall filter protect-re term accept-traceroute-udp from destination-port 33435-33450	
+set firewall filter protect-re term accept-traceroute-udp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-udp then count accept-traceroute-udp	
+set firewall filter protect-re term accept-traceroute-udp then accept	
+set firewall filter protect-re term accept-traceroute-icmp from protocol icmp	
+set firewall filter protect-re term accept-traceroute-icmp from ttl 1	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type echo-request	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type timestamp	
+set firewall filter protect-re term accept-traceroute-icmp from icmp-type time-exceeded	
+set firewall filter protect-re term accept-traceroute-icmp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-icmp then count accept-traceroute-icmp	
+set firewall filter protect-re term accept-traceroute-icmp then accept	
+set firewall filter protect-re term accept-traceroute-tcp from protocol tcp	
+set firewall filter protect-re term accept-traceroute-tcp from ttl 1	
+set firewall filter protect-re term accept-traceroute-tcp then policer management-1m	
+set firewall filter protect-re term accept-traceroute-tcp then count accept-traceroute-tcp	
+set firewall filter protect-re term accept-traceroute-tcp then accept	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list serials	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list loopbacks	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list snmp-trap-servers	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list snmp-community-clients	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list ssh-clients	
+set firewall filter protect-re term tcp-ddos-protect from source-prefix-list ntp-servers	
+set firewall filter protect-re term tcp-ddos-protect from destination-prefix-list myserials	
+set firewall filter protect-re term tcp-ddos-protect from destination-prefix-list myserials-logical-systems	
+set firewall filter protect-re term tcp-ddos-protect from protocol tcp	
+set firewall filter protect-re term tcp-ddos-protect from tcp-flags "(syn & !ack) | fin | rst"	
+set firewall filter protect-re term tcp-ddos-protect then policer management-1m	
+set firewall filter protect-re term tcp-ddos-protect then count tcp-ddos-protect	
+set firewall filter protect-re term tcp-ddos-protect then accept	
+set firewall filter protect-re term discard-TTL_1-unknown from ttl 1	
+set firewall filter protect-re term discard-TTL_1-unknown then count discard-all-TTL_1-unknown	
+set firewall filter protect-re term discard-TTL_1-unknown then discard	
+set firewall filter protect-re term discard-tcp from protocol tcp	
+set firewall filter protect-re term discard-tcp then count discard-tcp	
+set firewall filter protect-re term discard-tcp then discard	
+set firewall filter protect-re term discard-netbios from protocol udp	
+set firewall filter protect-re term discard-netbios from destination-port 137	
+set firewall filter protect-re term discard-netbios then count discard-netbios	
+set firewall filter protect-re term discard-netbios then discard	
+set firewall filter protect-re term discard-udp from protocol udp	
+set firewall filter protect-re term discard-udp then count discard-udp	
+set firewall filter protect-re term discard-udp then discard	
+set firewall filter protect-re term discard-icmp from protocol icmp	
+set firewall filter protect-re term discard-icmp then count discard-icmp	
+set firewall filter protect-re term discard-icmp then discard	
+set firewall filter protect-re term discard-unknown then count discard-unknown	
+set firewall filter protect-re term discard-unknown then discard	
+	
+set routing-options nonstop-routing	
+set routing-options rib inet6.0	
+set routing-options router-id <loopback>	
+set routing-options autonomous-system 65000	
+set routing-options forwarding-table export pplb	
+set routing-options forwarding-table indirect-next-hop-change-acknowledgements	
+	
+set protocols ldp traceoptions file ldp-trace	
+set protocols ldp traceoptions file size 1m	
+set protocols ldp traceoptions file files 10	
+set protocols ldp traceoptions file world-readable	
+set protocols ldp traceoptions flag state	
+set protocols ldp traceoptions flag error	
+set protocols ldp track-igp-metric	
+set protocols ldp egress-policy LDP-advertise	
+set protocols ldp deaggregate	
+set protocols ldp explicit-null	
+set protocols ldp label-withdrawal-delay 30	
+set protocols ldp igp-synchronization holddown-interval 10	
+set protocols ldp interface lo0.0 	
+	
+set protocols bgp path-selection external-router-id	
+set protocols bgp log-updown            	
+set protocols bgp bgp-error-tolerance	
+set protocols bgp group INTERNET_RR type internal	
+set protocols bgp group INTERNET_RR local-address <LOOPBACK>	
+set protocols bgp group INTERNET_RR hold-time 30	
+set protocols bgp group INTERNET_RR mtu-discovery	
+set protocols bgp group INTERNET_RR family inet unicast	
+set protocols bgp group INTERNET_RR family inet6 labeled-unicast	
+set protocols bgp group INTERNET_RR local-as 34984	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.1 import ibgp-import-from-internet-rr	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.1 authentication-key "$9$"	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.1 export ibgp-export-to-internet-rr	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.2 import ibgp-import-from-internet-rr	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.2 authentication-key "$9"	
+set protocols bgp group INTERNET_RR neighbor 1.1.1.2 export ibgp-export-to-internet-rr	
+	
+set protocols isis traceoptions file isis	
+set protocols isis traceoptions file size 5m	
+set protocols isis traceoptions file files 10	
+set protocols isis traceoptions file world-readable	
+set protocols isis traceoptions flag error detail	
+set protocols isis traceoptions flag state detail	
+set protocols isis lsp-lifetime 65535	
+set protocols isis no-ipv6-routing	
+set protocols isis spf-options delay 50	
+set protocols isis spf-options holddown 2000	
+set protocols isis spf-options rapid-runs 5	
+set protocols isis overload timeout 300	
+set protocols isis overload advertise-high-metrics	
+set protocols isis traffic-engineering ignore-lsp-metrics	
+set protocols isis level 2 authentication-type md5	
+set protocols isis level 2 no-csnp-authentication	
+set protocols isis level 2 no-psnp-authentication	
+set protocols isis level 2 wide-metrics-only	
+set protocols isis level 1 disable	
+set protocols isis interface all disable	
+set protocols isis interface lo0.0 passive	
+set protocols esis disable	
+	
+set protocols igmp interface ALL_PHY_UPLINKS disable	
+set protocols igmp interface ae<x.0> disable	igmp tüm aggregated interfaceler için de kapatılmalıdır. 
+	
+set protocols mpls statistics no-transit-statistics	
+set protocols mpls traceoptions file mpls-trace	
+set protocols mpls traceoptions file size 100m	
+set protocols mpls traceoptions file files 10	
+set protocols mpls traceoptions file world-readable	
+set protocols mpls traceoptions flag error	
+set protocols mpls traceoptions flag state	
+set protocols mpls no-propagate-ttl	ttl değerinin mpls e taşınmamasını sağlıyor. Dışarıdan gelen tracelerde paket IP olana kadar reply yapılmaz, yani omurga tek hop gibi görünür.
+set protocols mpls ipv6-tunneling	
+	
+set protocols pim interface fxp0.0 disable	
+	
+set protocols lldp management-address <loopback>	
+set protocols lldp ptopo-configuration-trap-interval 60	
+set protocols lldp lldp-configuration-notification-interval 60	
+set protocols lldp port-id-subtype interface-name	
+set protocols lldp interface all disable	
+	
+set protocols bfd traceoptions file bfd-trace	(FOR TSHOOT)
+set protocols bfd traceoptions file size 25m	
+set protocols bfd traceoptions file files 10	
+set protocols bfd traceoptions file world-readable	
+set protocols bfd traceoptions flag event	
+	
