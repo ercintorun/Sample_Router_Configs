@@ -1,0 +1,968 @@
+system
+  cli-timestamp enabled
+  name <hostname>
+  timezone Turkey
+  timing-mode ntp
+  aaa-server
+   admin-state enabled
+    class-of-service 18
+    tacacs
+      server priority 1 address 1.1.1.1
+       accounting enabled
+       authentication enabled
+       authorization enabled
+        password 
+        port 49
+        vrf mgmt0
+      !
+      server priority 2 address 1.1.1.2
+       accounting enabled
+       authentication enabled
+       authorization enabled
+        password 
+        port 49
+        vrf mgmt0
+      !
+    !
+  !
+in-band-management access-list ipv4 CoPP-IPv4
+
+!
+  icmp
+    unreachable
+      admin-state disabled
+    !
+  !
+  logging
+    file system-events
+      size 10
+    !
+    syslog
+      class-of-service 18
+      server 1.1.1.1 vrf mgmt0
+        admin-state enabled
+      !                                     
+      server 1.1.1.2 vrf mgmt0
+        admin-state enabled
+      !
+    !
+  !
+  login
+    ncm
+      user admin
+         password <encyrpted-password>
+    ipmi
+      user admin
+        password <encyrpted-password>
+    !
+  !
+  login
+    banner "*******************************************************************************\n*                                                                             *\n* UYARI MESAJI:Superonline Bilgi Guvenligi Politikalari geregi bu sisteme     *\n* sorumlu kisiler tarafindan yetkilendirilmedikce giris yapmak veya giris     *\n* yapmaya calismak yasaktir.Yapilacak her turlu yetkisiz islem ve denemeler   *\n* sonucunda yasal islem baslatilabilecektir.                                  *\n*                                                                             *\n*                                                                             *\n* WARNING MESSAGE:According to Superonline Information Security Policies,     *\n* unauthorized access and access attempts to this system is forbidden.Misuse  *\n* or unauthorized access may result in legal prosecution or penalties.        *\n*                                                                             *\n*          Erisim / Contact: Superonline NCC , ncc@superonline.net            *\n*                  +90 533 210 92 92, www.superonline.net                     *\n*******************************************************************************\n"
+      !
+    !                                       
+  !
+  management
+    vrf mgmt0
+      static
+        address-family ipv4
+          route 0.0.0.0/0 next-hop <mngmt-connection-default-gw-address>
+        !
+      !
+    !
+  !                                         
+  ncp 0
+    model NCP-40C hw-model S9700-53DX
+    admin-state enabled
+    description dn-ncp-0
+    hardware
+      usb 0
+      !
+    !
+  !
+  ncp 1
+    model NCP-40C hw-model S9700-53DX
+    admin-state enabled
+    description dn-ncp-1
+    hardware
+      usb 0
+      !
+    !
+  !
+  netconf
+    admin-state disabled
+    class-of-service 18
+  !
+  ntp
+    source-interface lo0
+    server 1.1.1.1 vrf default
+      admin-state enabled
+      prefer
+    !
+    server 1.1.1.2 vrf default
+      admin-state enabled
+    !
+  !
+  snmp
+    community te12c0m vrf mgmt0
+      access read-only
+      admin-state enabled
+      client-list 1.2.3.4/32,10.0.0.0/22
+    !
+    user snmpuser1
+      authentication md5 password <encyrpted-password>
+      encryption des
+!
+    user snmp-user-read
+      authentication md5 password <encyrpted-password>
+      encryption des
+!
+    user snmp-user-write
+      authentication md5 password <encyrpted-password>
+      encryption des
+!
+    trap-server 1.1.1.2 vrf default
+      admin-state enabled
+      community ABOOOO
+      source-interface lo0
+    !
+    trap-server 1.1.1.1 vrf default
+      admin-state enabled
+      community ABOOOO                     
+      source-interface lo0
+    !
+    class-of-service 18
+  !
+  ssh
+    server
+      class-of-service 18
+      max-sessions 20
+        ssh server vrf mgmt0 client-list type allow
+ssh server vrf mgmt0 client-list 1.2.3.4/32,10.0.0.0/22
+      !
+    !
+  tcp
+    path-mtu-discovery
+      host
+        admin-state enabled
+      !
+    !
+  telnet
+    server
+      admin-state disabled
+    !
+  !
+!
+services
+  flow-monitoring
+    exporter-profile FlowMonitor1
+      collector ip-address 1.1.1.1 class-of-service 18 port 9996
+      source-interface lo0
+    !
+    exporter-profile DDOS
+      collector ip-address <flow-collector-ip> class-of-service 18 port 9996
+      source-interface lo0
+!
+    sampler-profile sampler_1outof5000
+      rate 1-out-of 5000
+    !
+    template monitor_map_netflow_ipv4
+      exporter-profile FlowMonitor1,DDOS
+      flow-active-timeout 60
+      flow-idle-timeout 30
+      type ipv4
+    !
+    template monitor_map_netflow_ipv6
+      exporter-profile FlowMonitor1,DDOS
+      flow-active-timeout 60
+      flow-idle-timeout 30
+      type ipv6
+!
+    template monitor_map_netflow_mpls_ipv4
+      exporter-profile FlowMonitor1
+      flow-active-timeout 60
+      flow-idle-timeout 30
+      type ipv4-over-mpls
+    !
+    template monitor_map_netflow_mpls_ipv6
+      exporter-profile FlowMonitor1
+      flow-active-timeout 60
+      flow-idle-timeout 30
+      type ipv6-over-mpls
+    !
+  !
+!
+interfaces
+  console-ncp-0/0
+    admin-state enabled
+  !
+  console-ncp-1/0                           
+    admin-state enabled
+  !
+  fab-ncp400-0/0/0
+    admin-state enabled
+  !
+  fab-ncp400-0/0/1
+    admin-state enabled
+  !
+  fab-ncp400-0/0/2
+    admin-state enabled
+  !
+  fab-ncp400-0/0/3
+    admin-state enabled
+  !
+  fab-ncp400-0/0/4
+    admin-state enabled
+  !
+  fab-ncp400-0/0/5
+    admin-state enabled
+  !
+  fab-ncp400-0/0/6
+    admin-state enabled
+  !
+  fab-ncp400-0/0/7
+    admin-state enabled
+  !
+  fab-ncp400-0/0/8
+    admin-state enabled
+  !
+  fab-ncp400-0/0/9
+    admin-state enabled
+  !
+  fab-ncp400-0/0/10
+    admin-state enabled
+  !
+  fab-ncp400-0/0/11
+    admin-state enabled
+  !
+  fab-ncp400-0/0/12
+    admin-state enabled
+  !
+  fab-ncp400-1/0/0
+    admin-state enabled
+  !
+  fab-ncp400-1/0/1
+    admin-state enabled
+  !
+  fab-ncp400-1/0/2
+    admin-state enabled
+  !                                         
+  fab-ncp400-1/0/3
+    admin-state enabled
+  !
+  fab-ncp400-1/0/4
+    admin-state enabled
+  !
+  fab-ncp400-1/0/5
+    admin-state enabled
+  !
+  fab-ncp400-1/0/6
+    admin-state enabled
+  !
+  fab-ncp400-1/0/7
+    admin-state enabled
+  !
+  fab-ncp400-1/0/8
+    admin-state enabled
+  !
+  fab-ncp400-1/0/9
+    admin-state enabled
+  !
+  fab-ncp400-1/0/10
+    admin-state enabled
+  !
+  fab-ncp400-1/0/11
+ş
+  !
+  fab-ncp400-1/0/12
+    admin-state enabled
+  !
+  ipmi-ncp-0/0
+    admin-state enabled                     
+  !
+  ipmi-ncp-1/0
+    admin-state enabled
+  !
+  lo0
+    admin-state enabled
+    ipv4-address <loopback-ipv4>/32
+    ipv6-address <loopback-ipv6>/128
+  !
+  mgmt0
+    ipv4-address <management-address-VIP>/subnet-mask
+  !
+!
+routing-options
+  segment-routing mpls
+    global-block 24000 85354
+  !
+protocols
+  bgp class-of-service 48
+  bgp nsr enabled
+  bfd
+    class-of-service 56
+    !
+  !
+  bgp 34984
+    log-neighbor-changes enabled
+    router-id <loopback-ip>
+    address-family ipv4-unicast
+      add-path receive enabled
+      label-allocation per-prefix
+      maximum-paths ebgp 8
+      redistribute connected policy connected-into-bgp
+      redistribute static policy static-into-bgp
+    !
+    address-family ipv6-unicast
+      label-allocation per-prefix
+      redistribute connected policy ipv6-connected-into-bgp
+      redistribute static policy ipv6-static-into-bgp
+    !
+      !                                     
+    !
+    neighbor <RR>
+      remote-as 34984
+      authentication md5 password <encyrpted-password>
+      admin-state enabled
+      description <rr-neighbor-description>
+      strict-capability-match disabled
+      update-source lo0
+      timers hold-time 30 keep-alive 10
+      address-family ipv4-unicast
+        nexthop self
+        policy ibgp-import-from-inet-rr  in
+        policy ibgp-export-to-inet-rr out
+        send-community
+        send-large-community enabled
+        soft-reconfiguration inbound
+      !
+      address-family ipv6-unicast
+        labeled-unicast
+        nexthop self
+        maximum-prefix 300000 85 warning-only
+        policy ipv6-ibgp-import-from-internet-rr  in
+        policy ipv6-ibgp-export-to-internet-rr out
+        send-community
+        send-large-community enabled
+        soft-reconfiguration inbound
+      !
+    !
+  !
+  igmp
+    class-of-service 48
+  !
+  isis
+    nsr enabled
+    instance Backbone
+      dynamic-hostname enabled
+      iso-network <49.0001.xxxx.xxxx.xxxx.00>
+      level level-2
+      address-family ipv4-unicast
+        traffic-engineering enabled
+        segment-routing
+          admin-state enabled
+        !
+      !
+      interface lo0
+        address-family ipv4-unicast
+          metric 1
+          prefix-sid index <loopback-sid>
+        !                                   
+      !
+      timers
+        lsp-lifetime 65535
+        lsp-refresh 65000
+      !
+    !
+  !
+  ldp
+    router-id <loopback-ip>
+    ldp-sync on-session-delay 30
+    !
+    address-family ipv4-unicast
+      label allocation-filter LDP-Filter
+      label explicit-null enabled
+      discovery targeted
+        accept enabled
+      !
+    class-of-service 48
+    nsr enabled
+    rcv-addr-withdraw-delay 60
+  !
+  lldp
+    admin-state enabled
+  !
+  mpls
+   ttl-propagate disabled
+    traffic-engineering
+      igp-shortcuts enabled
+      router-id <loopback-ip>
+      admin-group-map
+        bit-position 0 name A
+        bit-position 1 name B               
+        bit-position 2 name C
+        bit-position 3 name D
+      !
+    !
+  !
+  rsvp
+    class-of-service 48
+    cspf-calculation enabled
+    rib-unicast-install enabled
+    auto-bypass
+      admin-state enabled
+      optimization enabled
+      primary
+        bandwidth 0
+        exclude-srlg avoid
+        priority setup 7 hold 7
+      !
+    !
+    optimization
+      admin-state enabled
+      interval 5
+        !
+      !
+  segment-routing
+    pcep
+      class-of-service 48
+    !
+  !
+  static
+    address-family ipv4-unicast
+      route 12.12.12.12/32 null0 tag 5
+      route 12.12.12.12/32 tag 5
+    !
+    address-family ipv6-unicast
+      route fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128 null0 tag 5
+      route fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128 tag 5
+    !
+  !
+!
+routing-policy
+  as-path-list locally-generated
+    rule 10 allow regex ^$
+  !
+  as-path-list private-as
+    rule 10 allow regex ^6451[2-9]$
+    rule 20 allow regex ^645[2-9][0-9]$
+    rule 30 allow regex ^64[6-9][0-9][0-9]$
+    rule 40 allow regex ^65[0-4][0-9][0-9]$
+    rule 50 allow regex ^655[0-2][0-9]$     
+    rule 60 allow regex ^6553[0-5]$
+  !
+  community-list no-advertise
+    rule 1 allow well-known-community no-advertise
+  !
+  community-list no-export
+    rule 1 allow well-known-community no-export
+  !
+  !
+  policy accept-all
+    rule 10 allow
+    !
+  !
+  policy connected-into-bgp
+    rule 10 allow
+      match ipv4 prefix pref-25to32
+      set community additive no-export
+    !
+    rule 100 allow
+    !
+  !
+  policy ibgp-export-to-internet-rr
+    rule 10 allow
+      set community additive 65555:111
+      on-match next
+    !
+    rule 20 deny                            
+      match ipv4 prefix local-loopback
+    !
+    rule 30 allow
+      match as-path locally-generated
+      set ipv4 next-hop <loopback-ip>
+    !
+    rule 100 deny
+    !
+  !
+  !
+  policy ibgp-import-from-internet-rr
+    rule 100 allow
+    !
+  !
+  policy ipv6-connected-into-bgp
+    rule 10 allow
+      match ipv6 prefix pref-49to128        
+      set community additive no-export
+    !
+    rule 100 allow
+    !
+  !
+  policy ipv6-ibgp-import-from-internet-rr
+    rule 100 allow
+    !
+  !
+ policy ipv6-static-into-bgp
+    rule 5 deny
+      match tag 5
+    !
+    rule 10 allow
+      match ipv6 prefix pref-49to128
+      set community additive no-export
+      on-match next
+    !
+    rule 15 allow
+      match tag 6
+      set local-preference 50
+    !
+    rule 20 allow
+      match tag 10
+      set local-preference 200
+    !
+    rule 100 allow
+    !
+  !
+  policy reject-all
+    rule 10 deny
+    !
+  !
+  policy static-into-bgp
+    rule 5 deny
+      match tag 5
+    !
+    rule 10 allow
+      match ipv4 prefix pref-25to32
+      set community additive no-export
+      on-match next
+    !
+    rule 15 allow
+      match tag 6
+      set local-preference 50
+    !
+    rule 20 allow
+      match tag 10
+      set local-preference 200
+    !
+    rule 100 allow
+    !
+  !
+  prefix-list ipv4 LDP-Filter
+    rule 10 allow 0.0.0.0/0 matching-len ge 32
+    rule 20 deny any
+  !
+  prefix-list ipv4 default-route
+    rule 1 allow 0.0.0.0/0
+  !
+  !
+  prefix-list ipv4 ipv4-bogons
+    rule 10 allow 10.0.0.0/8 matching-len le 32
+    rule 20 allow 172.16.0.0/12 matching-len le 32
+    rule 30 allow 192.168.0.0/16 matching-len le 32
+    rule 40 allow 0.0.0.0/8 matching-len le 32
+    rule 50 allow 14.0.0.0/8 matching-len le 32
+    rule 60 allow 24.0.0.0/8 matching-len le 32
+    rule 70 allow 39.0.0.0/8 matching-len le 32
+    rule 80 allow 127.0.0.0/8 matching-len le 32
+    rule 90 allow 128.0.0.0/16 matching-len le 32
+    rule 100 allow 169.254.0.0/16 matching-len le 32
+    rule 110 allow 191.255.0.0/16 matching-len le 32
+    rule 120 allow 192.0.0.0/24 matching-len le 32
+    rule 130 allow 192.0.2.0/24 matching-len le 32
+    rule 140 allow 192.88.99.0/24 matching-len le 32
+    rule 150 allow 198.18.0.0/15 matching-len le 32
+    rule 160 allow 223.255.255.0/24 matching-len le 32
+    rule 170 allow 224.0.0.0/4 matching-len le 32
+    rule 180 allow 240.0.0.0/4 matching-len le 32
+  !
+  prefix-list ipv4 local-loopback
+    rule 5 allow <loopback-ip>/32
+  !
+  prefix-list ipv4 pref-13to24
+    rule 1 allow 0.0.0.0/0 matching-len ge 13 le 24
+  !
+  prefix-list ipv4 pref-25to32
+    rule 1 allow 0.0.0.0/0 matching-len ge 25 le 32
+  !
+  prefix-list ipv4 pref-32to32
+    rule 1 allow 0.0.0.0/0 matching-len eq 32
+  !
+  prefix-list ipv6 ipv6-bogons
+    rule 10 allow ::/128
+    rule 20 allow ::1/128
+    rule 30 allow fc00::/7 matching-len le 128
+    rule 40 allow fe80::/10 matching-len le 128
+    rule 50 allow 2001::/32 matching-len le 128
+    rule 60 allow 2001:2::/48 matching-len le 128
+    rule 70 allow 2001:10::/28 matching-len le 128
+    rule 80 allow 2001:db8::/32 matching-len le 128
+    rule 90 allow ff00::/8 matching-len le 128
+  !
+  prefix-list ipv6 ipv6-default-route
+    rule 1 allow ::/0
+  !
+  prefix-list ipv6 pref-24to48
+    rule 1 allow ::/0 matching-len ge 24 le 48
+  !
+  prefix-list ipv6 pref-49to128
+    rule 1 allow ::/0 matching-len ge 49 le 128
+  !
+  prefix-list ipv6 pref-128                 
+    rule 1 allow ::/0 matching-len eq 128
+  !
+!
+access-lists                                
+  ipv4 CoPP-IPv4
+    rule 100 deny fragmented protocol tcp(0x06)
+    rule 101 deny fragmented protocol udp(0x11)
+    rule 102 deny fragmented protocol igmp(0x02)
+    rule 103 deny fragmented protocol rsvp(0x2E)
+    rule 104 deny fragmented protocol pim(0x67)
+    rule 200 description ipv4-options
+    rule 201 allow ipv4-options protocol rsvp(0x2E)
+    rule 202 deny ipv4-options
+    rule 300 description bfd
+    rule 301 allow dest-ip any dest-ports 3784-3785 ipv4-options protocol udp(0x11) src-ip any src-ports 49152-65535
+    rule 302 allow dest-ip any dest-ports 6784 protocol udp(0x11) src-ip any src-ports 49152-65535
+    rule 400 description accept-ldp-discover
+    rule 401 allow dest-ip 224.0.0.2/32 dest-ports 646 protocol udp(0x11) src-ip any
+    rule 500 description accept-ldp-unicast
+    rule 501 allow dest-ip any dest-ports 646 protocol tcp(0x06) src-ip any
+    rule 502 allow dest-ip any protocol tcp(0x06) src-ip any src-ports 646
+    rule 600 description igmp
+    rule 601 allow dest-ip any protocol igmp(0x02) src-ip any
+    rule 700 description ssh
+    rule 701 allow dest-ports 22 protocol tcp(0x06)
+    rule 800 description snmp
+    rule 801 allow protocol udp(0x11) src-ip 1.1.1.1/22 src-ports 161-162
+    rule 802 allow protocol udp(0x11) src-ip 2.2.2.2/32 src-ports 161-162
+    rule 900 description ntp
+    rule 901 allow dest-ports 123 protocol udp(0x11) src-ip 1.1.1.1/32
+    rule 902 allow protocol udp(0x11) src-ip 1.1.1.1/32 src-ports 123
+    rule 903 allow dest-ports 123 protocol udp(0x11) src-ip 2.2.2.2/32
+    rule 904 allow protocol udp(0x11) src-ip 2.2.2.2/32 src-ports 123
+    rule 1000 description tacacs
+    rule 1001 allow protocol udp(0x11) src-ip 1.1.1.1/32 src-ports 49
+    rule 1002 allow protocol tcp(0x06) src-ip 1.1.1.1/32 src-ports 49
+    rule 1003 allow protocol tcp(0x06) src-ip 1.1.1.1/32 src-ports 65
+    rule 1004 allow protocol udp(0x11) src-ip 2.2.2.2/32 src-ports 49
+    rule 1005 allow protocol tcp(0x06) src-ip 2.2.2.2/32 src-ports 49
+    rule 1006 allow protocol tcp(0x06) src-ip 2.2.2.2/32 src-ports 65
+    rule 1100 description icmp
+    rule 1101 allow icmp-type echo-reply protocol icmp(0x01)
+    rule 1102 allow icmp-type echo-request protocol icmp(0x01)
+    rule 1103 allow icmp-type router-advertisement protocol icmp(0x01)
+    rule 1104 allow icmp-type ttl-expired-in-transit protocol icmp(0x01)
+    rule 1105 allow icmp-type timestamp protocol icmp(0x01)
+    rule 1200 description bgp-neighbors
+  !
+  ipv4 INFRA-PROTECT-IPV4
+    rule 200 description from-Spoofed
+    rule 205 deny src-ip 0.0.0.0/8
+    rule 210 deny src-ip 10.0.0.0/8
+    rule 215 deny src-ip 100.64.0.0/10
+    rule 220 deny src-ip 127.0.0.0/8
+    rule 225 deny src-ip 169.254.0.0/16
+    rule 230 deny src-ip 172.16.0.0/12
+    rule 235 deny src-ip 192.0.0.0/24
+    rule 240 deny src-ip 192.0.2.0/24
+    rule 245 deny src-ip 192.168.0.0/16
+    rule 250 deny src-ip 198.18.0.0/15
+    rule 255 deny src-ip 198.51.100.0/24
+    rule 260 deny src-ip 203.0.113.0/24
+    rule 265 deny src-ip 224.0.0.0/3
+    rule 300 description to-Spoofed
+    rule 305 deny dest-ip 0.0.0.0/8
+    rule 310 deny dest-ip 10.0.0.0/8
+    rule 315 deny dest-ip 100.64.0.0/10
+    rule 320 deny dest-ip 127.0.0.0/8
+    rule 325 deny dest-ip 169.254.0.0/16
+    rule 330 deny dest-ip 172.16.0.0/12
+    rule 335 deny dest-ip 192.0.0.0/24
+    rule 340 deny dest-ip 192.0.2.0/24
+    rule 345 deny dest-ip 192.168.0.0/16
+    rule 350 deny dest-ip 198.18.0.0/15
+    rule 355 deny dest-ip 198.51.100.0/24
+    rule 360 deny dest-ip 203.0.113.0/24
+    rule 365 deny dest-ip 224.0.0.0/3
+    rule 5000 allow
+  !
+  ipv6 INFRA-PROTECT-IPV6
+    rule 100 description deny-from-ipv6-unassigned
+    rule 105 deny src-ip ::/8
+    rule 110 deny src-ip 100::/8
+    rule 115 deny src-ip 400::/6
+    rule 120 deny src-ip 800::/5
+    rule 125 deny src-ip 4000::/3
+    rule 130 deny src-ip 6000::/3
+    rule 135 deny src-ip 8000::/3
+    rule 140 deny src-ip a000::/3
+    rule 145 deny src-ip c000::/3
+    rule 150 deny src-ip e000::/4
+    rule 155 deny src-ip f000::/5
+    rule 160 deny src-ip f800::/6
+    rule 165 deny src-ip fe00::/9
+    rule 170 deny src-ip fec0::/10
+    rule 175 deny src-ip 2d00::/8
+    rule 180 deny src-ip 2e00::/7
+    rule 185 deny src-ip 3000::/4
+    rule 200 description deny-to-ipv6-unassigned
+    rule 205 deny dest-ip ::/8
+    rule 210 deny dest-ip 100::/8
+    rule 215 deny dest-ip 400::/6
+    rule 220 deny dest-ip 800::/5
+    rule 225 deny dest-ip 4000::/3
+    rule 230 deny dest-ip 6000::/3
+    rule 235 deny dest-ip 8000::/3
+    rule 240 deny dest-ip a000::/3
+    rule 245 deny dest-ip c000::/3
+    rule 250 deny dest-ip e000::/4          
+    rule 255 deny dest-ip f000::/5
+    rule 260 deny dest-ip f800::/6
+    rule 265 deny dest-ip fe00::/9
+    rule 270 deny dest-ip fec0::/10
+    rule 275 deny dest-ip 2d00::/8
+    rule 280 deny dest-ip 2e00::/7
+    rule 285 deny dest-ip 3000::/4
+    rule 300 description allow-from-ipv6-iana-multicast
+    rule 305 allow src-ip ff02::/16
+    rule 400 description allow-to-ipv6-iana-multicast
+    rule 405 allow dest-ip ff02::/16
+    rule 500 description deny-from-spoofed
+    rule 505 deny src-ip ::/128
+    rule 510 deny src-ip ::1/128
+    rule 515 deny src-ip fc00::/7
+    rule 520 deny src-ip ff00::/8
+    rule 600 description deny-to-bogon
+    rule 605 deny dest-ip ::/128
+    rule 610 deny dest-ip ::1/128
+    rule 615 deny dest-ip fc00::/7
+    rule 620 deny dest-ip ff00::/8
+    rule 900 description deny-to-ietf-protocol-spoofed
+    rule 905 deny dest-ip 2001::/23
+    rule 1000 description allow-from-ipv6-ietf-protocol-routable
+    rule 1005 allow src-ip 2001:4:112::/48
+    rule 1010 allow src-ip 2002::/16
+    rule 1100 description deny-from-ietf-protocol-spoofed
+    rule 1105 deny src-ip 2001::/23
+    rule 5000 allow
+  !
+!
+qos
+  traffic-class-map best-effort
+    match any
+    mpls-exp 0
+    precedence 0
+  !
+  traffic-class-map bronze
+    match any
+    mpls-exp 1
+    precedence 1
+  !
+  traffic-class-map silver
+    match any
+    mpls-exp 2
+    precedence 2
+  !
+  traffic-class-map gold
+    match any
+    mpls-exp 3
+    precedence 3
+  !
+  traffic-class-map platinum
+    match any                               
+    mpls-exp 4
+    precedence 4
+  !
+  traffic-class-map voice
+    match any
+    mpls-exp 5
+    precedence 5
+  !
+  traffic-class-map network-control-cs6
+    match any
+    mpls-exp 6
+    precedence 6
+  !
+  traffic-class-map network-control-cs7
+    match any
+    mpls-exp 7
+    precedence 7
+  !
+  traffic-class-map tag0
+    qos-tag 0
+  !
+  traffic-class-map tag1
+    qos-tag 1
+  !
+  traffic-class-map tag2
+    qos-tag 2
+  !
+  traffic-class-map tag3
+    qos-tag 3
+  !
+  traffic-class-map tag4
+    qos-tag 4
+  !
+  traffic-class-map tag5
+    qos-tag 5
+  !
+  traffic-class-map tag6
+    qos-tag 6
+  !
+  traffic-class-map tag7
+    qos-tag 7
+  !
+  policy UPLINK-INPUT-CLASSIFIER
+    rule 10
+      match traffic-class bronze          
+        set
+          qos-tag 1
+        !
+      !
+    !
+    rule 20
+      match traffic-class silver
+      action
+        set
+          qos-tag 2
+        !
+      !
+    !
+    rule 30
+      match traffic-class gold
+      action
+        set
+          qos-tag 3
+        !
+      !
+    !
+    rule 40
+      match traffic-class platinum
+      action
+        set
+          qos-tag 4
+        !
+      !
+    !
+    rule 50
+      match traffic-class voice
+      action
+        set
+          qos-tag 5
+        !
+      !
+    !
+    rule 60
+      match traffic-class network-control-cs6
+      action
+        set
+          qos-tag 6
+        !
+      !                                     
+    !
+    rule 70
+      match traffic-class network-control-cs7
+      action
+        set
+          qos-tag 7
+        !
+      !
+    !
+    rule default
+      action
+        set
+          qos-tag 0
+        !
+      !
+    !
+  !
+  policy UPLINK-OUTPUT-SCHEDULER
+    rule 10
+      match traffic-class tag1
+      action
+        queue
+          forwarding-class af
+            bandwidth 20 percent
+          !
+        !
+      !
+    !
+    rule 20
+      match traffic-class tag2
+      action
+        queue
+          forwarding-class af
+            bandwidth 20 percent
+          !
+        !
+      !
+    !
+    rule 30
+      match traffic-class tag3
+      action
+        queue
+          forwarding-class af
+            bandwidth 25 percent
+          !
+        !
+      !
+    !
+    rule 40
+      match traffic-class tag4              
+      action
+        queue
+          forwarding-class af
+            bandwidth 10 percent
+          !
+        !
+      !
+    !
+    rule 50
+      match traffic-class tag5
+      action
+        queue
+          forwarding-class hp
+            max-bandwidth 15 percent
+          !
+        !
+      !
+    !
+    rule 70
+      match traffic-class tag6
+      action
+        queue
+          forwarding-class ef
+            max-bandwidth 3 percent
+          !
+        !
+      !
+    !
+    rule 80
+      match traffic-class tag7
+      action
+        queue
+          forwarding-class super-ef
+            max-bandwidth 2 percent
+          !
+        !
+      !
+    !
+    rule default
+      action
+        queue
+          forwarding-class df
+            bandwidth 5 percent
+         !
+        !
+      !
+    !
+  !
+  policy internet
+    rule default
+      action
+        set
+          qos-tag 0
+        !
+      !
+    !
+  !
+!
