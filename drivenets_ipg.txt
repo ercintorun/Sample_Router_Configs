@@ -103,7 +103,7 @@ in-band-management access-list ipv4 CoPP-IPv4
     !
   !
   snmp
-    community te12c0m vrf mgmt0
+    community <COMMUNITY-NAME> vrf mgmt0
       access read-only
       admin-state enabled
       client-list 1.2.3.4/32,10.0.0.0/22
