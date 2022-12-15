@@ -57,7 +57,7 @@ in-band-management access-list ipv4 CoPP-IPv4
     !
   !
   login
-    banner "*******************************************************************************\n*                                                                             *\n* UYARI MESAJI:Superonline Bilgi Guvenligi Politikalari geregi bu sisteme     *\n* sorumlu kisiler tarafindan yetkilendirilmedikce giris yapmak veya giris     *\n* yapmaya calismak yasaktir.Yapilacak her turlu yetkisiz islem ve denemeler   *\n* sonucunda yasal islem baslatilabilecektir.                                  *\n*                                                                             *\n*                                                                             *\n* WARNING MESSAGE:According to Superonline Information Security Policies,     *\n* unauthorized access and access attempts to this system is forbidden.Misuse  *\n* or unauthorized access may result in legal prosecution or penalties.        *\n*                                                                             *\n*          Erisim / Contact: Superonline NCC , ncc@superonline.net            *\n*                  +90 533 210 92 92, www.superonline.net                     *\n*******************************************************************************\n"
+    banner "*******************************************************************************\n*                                                                               *\n*******************************************************************************\n"
       !
     !                                       
   !
